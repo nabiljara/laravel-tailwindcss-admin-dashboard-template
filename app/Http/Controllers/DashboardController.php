@@ -38,6 +38,8 @@
             $responseData = $response->json();
             $stations = $responseData['stations'];
 
-            return view('pages/dashboard/dashboard', compact(['dataFeed','stations']));
+            $topics = ['temp'=>'Temperatura','hum'=>'Humedad','dew_point'=>'Punto de rocio','wind_speed_last'=>'Velocidad del viento','wind_dir_last'=>'Dirección del viento','rain_storm_last_mm'=>'Lluvia','battery_voltage'=>'Batería','bar_absolute'=>'Presión'];
+
+            return view('pages/dashboard/dashboard', compact(['dataFeed','stations','topics']));
         }
     }
