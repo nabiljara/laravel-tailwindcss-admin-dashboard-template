@@ -1,6 +1,8 @@
 import {
     Tabs
 } from 'flowbite';
+import connection from './connection.js';
+
 const dashboard = () =>{
 
 const tabsElement = document.getElementById('tabs');
@@ -44,6 +46,8 @@ var targetElId = null;
         const target = targets[i];
         triggerElId = CSS.escape(button.id);
         targetElId = CSS.escape(target.id);
+        // console.log(triggerElId);
+        // console.log(targetElId);
         tabElements.push({
                     id: triggerElId,
                     triggerEl: document.querySelector(`#${triggerElId}`),
@@ -68,9 +72,18 @@ const tabs = new Tabs(tabsElement, tabElements, options, instanceOptions);
 // shows another tab element
 tabs.show(CSS.escape(buttons[0].id));
 
-// get the tab object based on ID
-// tabs.getTab('contacts');
+const client = connection();
+const topic = "Estación-145839-Sensor-557448/bar-absolute";
 
+client.subscribe(topic, () => {
+      console.log(`Subscribe to topic '${topic}'`)
+    })
+    client.on('message', (topic, payload) => {
+    tabs.getTab(triggerElId).targetEl.querySelector(".measure").textContent = payload;
+    });
+// get the tab object based on ID
+// console.log(tabs.getTab(triggerElId).targetEl.querySelector(".measure"));
+// tabs.getTab(triggerElId).targetEl.querySelector(".measure").textContent = "Hola"; //Forma de acceder al componente correctamente.
 // get the current active tab object
 // tabs.getActiveTab();
 

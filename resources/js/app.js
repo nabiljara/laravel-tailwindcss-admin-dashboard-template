@@ -22,7 +22,6 @@ import dashboardCard08 from './components/dashboard-card-08';
 import dashboardCard09 from './components/dashboard-card-09';
 import dashboardCard11 from './components/dashboard-card-11';
 import dashboard from './components/dashboard.js';
-import connection from './components/connection.js';
 
 // Call Alpine
 window.Alpine = Alpine;
@@ -123,5 +122,4 @@ document.addEventListener('DOMContentLoaded', () => {
   dashboardCard09();
   dashboardCard11();
   dashboard();
-  connection();
 });
