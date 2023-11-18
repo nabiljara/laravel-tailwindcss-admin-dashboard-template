@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataFeedController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\MapController;
+use App\Http\Controllers\ReglaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/json-data-feed', [DataFeedController::class, 'getDataFeed'])->name('json_data_feed');
     Route::get('/json-key-feed', [UserController::class, 'getKeyFeed'])->name('json_key_feed');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/map', [MapController::class, 'map'])->name('map');
+    Route::get('/crear-regla', [ReglaController::class, 'crearRegla'])->name('crear_regla');
     Route::fallback(function() {
         return view('pages/utility/404');
     });    
