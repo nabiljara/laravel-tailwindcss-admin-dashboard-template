@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0182c7f166ef2332ace27d8fe53d126",
+    "content-hash": "4ab91d15a1f17c17499b45532bd3fc43",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -655,6 +655,82 @@
                 "source": "https://github.com/gajus/dindent/tree/master"
             },
             "time": "2014-10-08T10:03:04+00:00"
+        },
+        {
+            "name": "gonoware/laravel-maps",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "git@gitlab.com:gonoware/laravel-maps.git",
+                "reference": "ea42092b92ee17c3931cb59b0b8fa8d14b29cbd4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/gonoware%2Flaravel-maps/repository/archive.zip?sha=ea42092b92ee17c3931cb59b0b8fa8d14b29cbd4",
+                "reference": "ea42092b92ee17c3931cb59b0b8fa8d14b29cbd4",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^9.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4.4",
+                "phpunit/phpunit": "^9.5.10"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "GoNoWare\\Maps\\MapsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GoNoWare\\Maps\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emanuel Mutschlechner",
+                    "email": "em@gonoware.com"
+                },
+                {
+                    "name": "Benedikt Tuschter",
+                    "email": "bt@gonoware.com"
+                }
+            ],
+            "description": "Maps for your Laravel application",
+            "homepage": "https://gitlab.com/gonoware/laravel-maps",
+            "keywords": [
+                "OpenStreetMap",
+                "bing",
+                "bingmaps",
+                "gonoware",
+                "google",
+                "googlemaps",
+                "laravel",
+                "mapkit",
+                "mapkitjs",
+                "mapquest",
+                "maps",
+                "osm",
+                "yandex",
+                "yandexmaps"
+            ],
+            "support": {
+                "issues": "https://gitlab.com/gonoware/laravel-maps/issues",
+                "source": "https://gitlab.com/gonoware/laravel-maps"
+            },
+            "time": "2022-11-16T23:10:53+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -2036,16 +2112,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.19.0",
+            "version": "3.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "1b2aa10f2326e0351399b8ce68e287d8e9209a83"
+                "reference": "a326d8a2d007e4ca327a57470846e34363789258"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/1b2aa10f2326e0351399b8ce68e287d8e9209a83",
-                "reference": "1b2aa10f2326e0351399b8ce68e287d8e9209a83",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/a326d8a2d007e4ca327a57470846e34363789258",
+                "reference": "a326d8a2d007e4ca327a57470846e34363789258",
                 "shasum": ""
             },
             "require": {
@@ -2110,7 +2186,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.19.0"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.21.0"
             },
             "funding": [
                 {
@@ -2122,20 +2198,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-11-07T09:04:28+00:00"
+            "time": "2023-11-18T13:59:15+00:00"
         },
         {
             "name": "league/flysystem-local",
-            "version": "3.19.0",
+            "version": "3.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-local.git",
-                "reference": "8d868217f9eeb4e9a7320db5ccad825e9a7a4076"
+                "reference": "470eb1c09eaabd49ebd908ae06f23983ba3ecfe7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-local/zipball/8d868217f9eeb4e9a7320db5ccad825e9a7a4076",
-                "reference": "8d868217f9eeb4e9a7320db5ccad825e9a7a4076",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-local/zipball/470eb1c09eaabd49ebd908ae06f23983ba3ecfe7",
+                "reference": "470eb1c09eaabd49ebd908ae06f23983ba3ecfe7",
                 "shasum": ""
             },
             "require": {
@@ -2170,7 +2246,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem-local/issues",
-                "source": "https://github.com/thephpleague/flysystem-local/tree/3.19.0"
+                "source": "https://github.com/thephpleague/flysystem-local/tree/3.21.0"
             },
             "funding": [
                 {
@@ -2182,7 +2258,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-11-06T20:35:28+00:00"
+            "time": "2023-11-18T13:41:42+00:00"
         },
         {
             "name": "league/mime-type-detection",

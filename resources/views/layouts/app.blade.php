@@ -39,6 +39,11 @@
                 document.querySelector('body').classList.remove('sidebar-expanded');
             }
         </script>
+        <style>
+            #map {
+              height: 100%;
+            }
+        </style>
 
         <!-- Page wrapper -->
         <div class="flex h-screen overflow-hidden">
@@ -57,7 +62,6 @@
             </div>
 
         </div>
-
         @livewireScripts
     </body>
 </html>
