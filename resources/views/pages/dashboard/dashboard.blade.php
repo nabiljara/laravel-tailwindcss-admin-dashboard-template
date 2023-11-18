@@ -58,9 +58,95 @@
                     {{-- Componentes --}}
                     @foreach ($topics as $topic => $name_topic)
                         <div class="col-span-12 sm:col-span-4">
-                            <div class="p-4 relative  bg-gray-800 border border-gray-800 shadow-lg  rounded-2xl">
-                                <div class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5">20
-                                </div>
+                            <div class="p-4 relative bg-gray-800 border border-gray-800 shadow-lg rounded-2xl">
+                                @switch($topic)
+                                    @case('temp')
+                                        <svg class="h-8 w-8 text-red-500" width="24" height="24" viewBox="0 0 24 24"
+                                            stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" />
+                                            <path d="M10 13.5a4 4 0 1 0 4 0v-8.5a2 2 0 0 0 -4 0v8.5" />
+                                            <line x1="10" y1="9" x2="14" y2="9" />
+                                        </svg>
+                                    @break
+
+                                    @case('hum')
+                                        <svg class="h-8 w-8 text-gray-400" width="24" height="24" viewBox="0 0 24 24"
+                                            stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" />
+                                            <path d="M7 18a4.6 4.4 0 0 1 0 -9h0a5 4.5 0 0 1 11 2h1a3.5 3.5 0 0 1 0 7h-12" />
+                                        </svg>
+                                    @break
+
+                                    @case('dew_point')
+                                        <svg class="h-8 w-8 text-blue-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25" />
+                                            <line x1="8" y1="16" x2="8.01" y2="16" />
+                                            <line x1="8" y1="20" x2="8.01" y2="20" />
+                                            <line x1="12" y1="18" x2="12.01" y2="18" />
+                                            <line x1="12" y1="22" x2="12.01" y2="22" />
+                                            <line x1="16" y1="16" x2="16.01" y2="16" />
+                                            <line x1="16" y1="20" x2="16.01" y2="20" />
+                                        </svg>
+                                    @break
+
+                                    @case('wind_speed_last')
+                                        <svg class="h-8 w-8 text-white" width="24" height="24" viewBox="0 0 24 24"
+                                            stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" />
+                                            <path d="M5 8h8.5a2.5 2.5 0 1 0 -2.34 -3.24" />
+                                            <path d="M3 12h15.5a2.5 2.5 0 1 1 -2.34 3.24" />
+                                            <path d="M4 16h5.5a2.5 2.5 0 1 1 -2.34 3.24" />
+                                        </svg>
+                                    @break
+
+                                    @case('wind_dir_last')
+                                    <svg class="h-8 w-8 text-white wind-direction" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="8 12 12 8 16 12" />
+                                    <line x1="12" y1="16" x2="12" y2="8" />
+                                </svg>
+                                
+                                    @break
+
+                                    @case('rain_storm_last_mm')
+                                        <svg class="h-8 w-8 text-blue-600" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <line x1="16" y1="13" x2="16" y2="21" />
+                                            <line x1="8" y1="13" x2="8" y2="21" />
+                                            <line x1="12" y1="15" x2="12" y2="23" />
+                                            <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25" />
+                                        </svg>
+                                    @break
+
+                                    @case('battery_voltage')
+                                        <svg class="h-8 w-8 text-green-500" width="24" height="24" viewBox="0 0 24 24"
+                                            stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" />
+                                            <path
+                                                d="M16 7h1a2 2 0 0 1 2 2v.5a.5 .5 0 0 0 .5 .5a.5 .5 0 0 1 .5 .5v3a.5 .5 0 0 1 -.5 .5a.5 .5 0 0 0 -.5 .5v.5a2 2 0 0 1 -2 2h-2" />
+                                            <path d="M8 7H6a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h1" />
+                                            <polyline points="12 8 10 12 13 12 11 16" />
+                                        </svg>
+                                    @break
+
+                                    @case('bar_absolute')
+                                    <svg class="h-8 w-8 text-white"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                                      </svg>
+                                      
+                                    @break
+                                @endswitch
+                                
+                                <div class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5">
+                                    -
+                                    </div>
                                 <div class="text-sm text-gray-500">{{ $name_topic }}</div>
                             </div>
                         </div>
@@ -167,43 +253,43 @@
 
 
                 <!-- Line chart (Acme Plus) -->
-                <x-dashboard.dashboard-card-01 :dataFeed="$dataFeed" />
+                {{-- <x-dashboard.dashboard-card-01 :dataFeed="$dataFeed" /> --}}
 
                 <!-- Line chart (Acme Advanced) -->
-                <x-dashboard.dashboard-card-02 :dataFeed="$dataFeed" />
+                {{-- <x-dashboard.dashboard-card-02 :dataFeed="$dataFeed" /> --}}
 
                 <!-- Line chart (Acme Professional) -->
-                <x-dashboard.dashboard-card-03 :dataFeed="$dataFeed" />
+                {{-- <x-dashboard.dashboard-card-03 :dataFeed="$dataFeed" /> --}}
 
                 <!-- Bar chart (Direct vs Indirect) -->
-                <x-dashboard.dashboard-card-04 />
+                {{-- <x-dashboard.dashboard-card-04 /> --}}
 
                 <!-- Line chart (Real Time Value) -->
-                <x-dashboard.dashboard-card-05 />
+                {{-- <x-dashboard.dashboard-card-05 /> --}}
 
                 <!-- Doughnut chart (Top Countries) -->
-                <x-dashboard.dashboard-card-06 />
+                {{-- <x-dashboard.dashboard-card-06 /> --}}
 
                 <!-- Table (Top Channels) -->
-                <x-dashboard.dashboard-card-07 />
+                {{-- <x-dashboard.dashboard-card-07 /> --}}
 
                 <!-- Line chart (Sales Over Time)  -->
-                <x-dashboard.dashboard-card-08 />
+                {{-- <x-dashboard.dashboard-card-08 /> --}}
 
                 <!-- Stacked bar chart (Sales VS Refunds) -->
-                <x-dashboard.dashboard-card-09 />
+                {{-- <x-dashboard.dashboard-card-09 /> --}}
 
                 <!-- Card (Customers)  -->
-                <x-dashboard.dashboard-card-10 />
+                {{-- <x-dashboard.dashboard-card-10 /> --}}
 
                 <!-- Card (Reasons for Refunds)   -->
-                <x-dashboard.dashboard-card-11 />
+                {{-- <x-dashboard.dashboard-card-11 /> --}}
 
                 <!-- Card (Recent Activity) -->
-                <x-dashboard.dashboard-card-12 />
+                {{-- <x-dashboard.dashboard-card-12 /> --}}
 
                 <!-- Card (Income/Expenses) -->
-                <x-dashboard.dashboard-card-13 />
+                {{-- <x-dashboard.dashboard-card-13 /> --}}
 
             </div>
 
