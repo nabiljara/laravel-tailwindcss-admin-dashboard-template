@@ -82,9 +82,9 @@
 
     <script>
 
-        addEventListener("submit", (event) => {
+        /* addEventListener("submit", (event) => {
 
-        });
+        }); */
     </script>
 
 </x-app-layout>

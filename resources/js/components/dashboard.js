@@ -76,12 +76,12 @@ const dashboard = () => {
         'Estación-167442-Sensor-650019/bar_absolute'
       ];
 
-    topics.forEach((topic) => {
-        client.subscribe(topic, () => {
-            console.log(`Subscribed to topic '${topic}'`);
+    //topics.forEach((topic) => {
+    //    client.subscribe(topic, () => {
+    //        console.log(`Subscribed to topic '${topic}'`);
             // Aquí puedes realizar otras acciones una vez que te suscribas al tema
-        });
-    });
+    //    });
+    //});
 
     client.on("message", (topic, payload) => {
         
@@ -101,8 +101,10 @@ const dashboard = () => {
     // console.log(tabs.getTab(triggerElId).targetEl.querySelector(".measure"));
     // tabs.getTab(triggerElId).targetEl.querySelector(".measure").textContent = "Hola"; //Forma de acceder al componente correctamente.
     // get the current active tab object
-    // tabs.getActiveTab();
+    
 };
+
+
 
 export default dashboard;
 
