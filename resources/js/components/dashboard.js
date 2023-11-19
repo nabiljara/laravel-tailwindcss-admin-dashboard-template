@@ -1,5 +1,6 @@
-import { Tabs } from "flowbite";
+import { Tabs, Dismiss } from "flowbite";
 import connection from "./connection.js";
+import axios from 'axios';
 
 const dashboard = () => {
     const tabsElement = document.getElementById("tabs");
@@ -43,56 +44,55 @@ const dashboard = () => {
     // const topic = "Estación-123501-Sensor-525320/temp";
 
     const topics = [
-        'Estación-123501-Sensor-525320/temp',
-        'Estación-123501-Sensor-525320/hum',
-        'Estación-123501-Sensor-525320/dew_point',
-        'Estación-123501-Sensor-464200/wind_speed_last',
-        'Estación-123501-Sensor-464200/wind_dir_last',
-        'Estación-123501-Sensor-464200/rain_storm_last_mm',
-        'Estación-123501-Sensor-462215/battery_voltage',
-        'Estación-123501-Sensor-462216/bar_absolute',
-        'Estación-138225-Sensor-525327/temp',
-        'Estación-138225-Sensor-525327/hum',
-        'Estación-138225-Sensor-525327/dew_point',
-        'Estación-138225-Sensor-525169/battery_voltage',
-        'Estación-138225-Sensor-525170/bar_absolute',
-        'Estación-145839-Sensor-653825/temp',
-        'Estación-145839-Sensor-653825/hum',
-        'Estación-145839-Sensor-653825/dew_point',
-        'Estación-145839-Sensor-653824/wind_speed_last',
-        'Estación-145839-Sensor-653824/wind_dir_last',
-        'Estación-145839-Sensor-653824/rain_storm_last_mm',
-        'Estación-145839-Sensor-653824/battery_voltage',
-        'Estación-145839-Sensor-557448/bar-absolute',
-        'Estación-145862-Sensor-558414/temp',
-        'Estación-145862-Sensor-558414/hum',
-        'Estación-145862-Sensor-558414/dew_point',
-        'Estación-145862-Sensor-557536/battery_voltage',
-        'Estación-145862-Sensor-557537/bar_absolute',
-        'Estación-167442-Sensor-653139/temp',
-        'Estación-167442-Sensor-653139/hum',
-        'Estación-167442-Sensor-653139/dew_point',
-        'Estación-167442-Sensor-650012/battery_voltage',
-        'Estación-167442-Sensor-650019/bar_absolute'
-      ];
+        "Estación-123501-Sensor-525320/temp",
+        "Estación-123501-Sensor-525320/hum",
+        "Estación-123501-Sensor-525320/dew_point",
+        "Estación-123501-Sensor-464200/wind_speed_last",
+        "Estación-123501-Sensor-464200/wind_dir_last",
+        "Estación-123501-Sensor-464200/rain_storm_last_mm",
+        "Estación-123501-Sensor-462215/battery_voltage",
+        "Estación-123501-Sensor-462216/bar_absolute",
+        "Estación-138225-Sensor-525327/temp",
+        "Estación-138225-Sensor-525327/hum",
+        "Estación-138225-Sensor-525327/dew_point",
+        "Estación-138225-Sensor-525169/battery_voltage",
+        "Estación-138225-Sensor-525170/bar_absolute",
+        "Estación-145839-Sensor-653825/temp",
+        "Estación-145839-Sensor-653825/hum",
+        "Estación-145839-Sensor-653825/dew_point",
+        "Estación-145839-Sensor-653824/wind_speed_last",
+        "Estación-145839-Sensor-653824/wind_dir_last",
+        "Estación-145839-Sensor-653824/rain_storm_last_mm",
+        "Estación-145839-Sensor-653824/battery_voltage",
+        "Estación-145839-Sensor-557448/bar-absolute",
+        "Estación-145862-Sensor-558414/temp",
+        "Estación-145862-Sensor-558414/hum",
+        "Estación-145862-Sensor-558414/dew_point",
+        "Estación-145862-Sensor-557536/battery_voltage",
+        "Estación-145862-Sensor-557537/bar_absolute",
+        "Estación-167442-Sensor-653139/temp",
+        "Estación-167442-Sensor-653139/hum",
+        "Estación-167442-Sensor-653139/dew_point",
+        "Estación-167442-Sensor-650012/battery_voltage",
+        "Estación-167442-Sensor-650019/bar_absolute",
+    ];
 
     //topics.forEach((topic) => {
     //    client.subscribe(topic, () => {
     //        console.log(`Subscribed to topic '${topic}'`);
-            // Aquí puedes realizar otras acciones una vez que te suscribas al tema
+    // Aquí puedes realizar otras acciones una vez que te suscribas al tema
     //    });
     //});
 
     client.on("message", (topic, payload) => {
-        
         const station_id = topic.split("-")[1];
         const measure = topic.split("/").pop();
         console.log(station_id);
         console.log(measure);
 
-        triggerElId = CSS.escape(station_id)
+        triggerElId = CSS.escape(station_id);
         console.log(triggerElId);
-        
+
         tabs
             .getTab(triggerElId)
             .targetEl.querySelector(`.${measure}`).textContent = payload;
@@ -101,10 +101,9 @@ const dashboard = () => {
     // console.log(tabs.getTab(triggerElId).targetEl.querySelector(".measure"));
     // tabs.getTab(triggerElId).targetEl.querySelector(".measure").textContent = "Hola"; //Forma de acceder al componente correctamente.
     // get the current active tab object
+
     
 };
-
-
 
 export default dashboard;
 
