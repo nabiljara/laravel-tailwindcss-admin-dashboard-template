@@ -1,8 +1,6 @@
 <x-app-layout>
     {{-- @dd($stations) --}}
     {{-- @dd($topics) --}}
-    {{-- @dd($notificaciones) --}}
-
     <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
 
 
@@ -199,7 +197,6 @@
         </div>
         <div id="tabContentExample">
             @foreach ($stations as $station)
-                {{-- <div class="station-target hidden rounded-lg bg-gray-50 p-4 dark:bg-gray-800"> --}}
                 {{-- Acá van todos los elementos para mostrar --}}
                 <div class="station-target hidden grid grid-cols-12 gap-4" id="{{ $station['station_id_uuid'] }}"
                     role="tabpanel" aria-labelledby="{{ $station['station_id'] }}">
@@ -209,13 +206,23 @@
                             <div class="p-4 relative bg-gray-800 border border-gray-800 shadow-lg rounded-2xl">
                                 @switch($topic)
                                     @case('temp')
-                                        <svg class="h-8 w-8 text-red-500" width="24" height="24" viewBox="0 0 24 24"
-                                            stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" />
-                                            <path d="M10 13.5a4 4 0 1 0 4 0v-8.5a2 2 0 0 0 -4 0v8.5" />
-                                            <line x1="10" y1="9" x2="14" y2="9" />
-                                        </svg>
+                                    <svg class="h-8 w-8 text-red-500" width="24" height="24" viewBox="0 0 24 24"
+                                                stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" />
+                                                <path d="M10 13.5a4 4 0 1 0 4 0v-8.5a2 2 0 0 0 -4 0v8.5" />
+                                                <line x1="10" y1="9" x2="14" y2="9" />
+                                            </svg>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5"> - </div>
+                                            </td>
+                                            <td>
+                                                <div class="text-2xl text-gray-100 font-medium leading-8 mt-5">° C</div>                                            
+                                            </td>
+                                        </tr>
+                                    </table>
                                     @break
 
                                     @case('hum')
@@ -225,6 +232,14 @@
                                             <path stroke="none" d="M0 0h24v24H0z" />
                                             <path d="M7 18a4.6 4.4 0 0 1 0 -9h0a5 4.5 0 0 1 11 2h1a3.5 3.5 0 0 1 0 7h-12" />
                                         </svg>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5"> - </div>
+                                                </td>
+                                                <td><div class="text-2xl text-gray-100 font-medium leading-8 mt-5">%</div></td>
+                                            </tr>
+                                        </table>
                                     @break
 
                                     @case('dew_point')
@@ -239,6 +254,14 @@
                                             <line x1="16" y1="16" x2="16.01" y2="16" />
                                             <line x1="16" y1="20" x2="16.01" y2="20" />
                                         </svg>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5"> - </div>
+                                                </td>
+                                                <td><div class="text-2xl text-gray-100 font-medium leading-8 mt-5">° C</div></td>
+                                            </tr>
+                                        </table>
                                     @break
 
                                     @case('wind_speed_last')
@@ -250,6 +273,14 @@
                                             <path d="M3 12h15.5a2.5 2.5 0 1 1 -2.34 3.24" />
                                             <path d="M4 16h5.5a2.5 2.5 0 1 1 -2.34 3.24" />
                                         </svg>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5"> - </div>
+                                                </td>
+                                                <td><div class="text-2xl text-gray-100 font-medium leading-8 mt-5">   km/h</div></td>
+                                            </tr>
+                                        </table>
                                     @break
 
                                     @case('wind_dir_last')
@@ -260,6 +291,14 @@
                                             <polyline points="8 12 12 8 16 12" />
                                             <line x1="12" y1="16" x2="12" y2="8" />
                                         </svg>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5"> - </div>
+                                                </td>
+                                                <td><div class="text-2xl text-gray-100 font-medium leading-8 mt-5">°</div></td>
+                                            </tr>
+                                        </table>
                                     @break
 
                                     @case('rain_storm_last_mm')
@@ -271,6 +310,14 @@
                                             <line x1="12" y1="15" x2="12" y2="23" />
                                             <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25" />
                                         </svg>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5"> - </div>
+                                                </td>
+                                                <td><div class="text-2xl text-gray-100 font-medium leading-8 mt-5"> mm</div></td>
+                                            </tr>
+                                        </table>
                                     @break
 
                                     @case('battery_voltage')
@@ -283,6 +330,14 @@
                                             <path d="M8 7H6a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h1" />
                                             <polyline points="12 8 10 12 13 12 11 16" />
                                         </svg>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5"> - </div>
+                                                </td>
+                                                <td><div class="text-2xl text-gray-100 font-medium leading-8 mt-5">%</div></td>
+                                            </tr>
+                                        </table>
                                     @break
 
                                     @case('bar_absolute')
@@ -291,53 +346,24 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                                         </svg>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5"> - </div>
+                                                </td>
+                                                <td><div class="text-2xl text-gray-100 font-medium leading-8 mt-5"> mbar</div></td>
+                                            </tr>
+                                        </table>
                                     @break
                                 @endswitch
-
-                                <div class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5">
-                                    -
-                                </div>
-                                <div class="text-sm text-gray-500">{{ $name_topic }}</div>
+                                <b><div class="text-sm text-gray-500">{{ $name_topic }}</div></b>
                             </div>
                         </div>
                     @endforeach
-                    {{-- <div class="col-span-12 sm:col-span-4">
-                        <div class="p-4 relative  bg-gray-800 border border-gray-800 shadow-lg  rounded-2xl">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="h-14 w-14  absolute bottom-4 right-3 text-blue-500" viewBox="0 0 20 20"
-                                fill="currentColor">
-                                <path
-                                    d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-                            </svg>
-                            <div class="flex justify-between items-center ">
-                                <i class="fab fa-behance text-xl text-gray-400"></i>
-                            </div>
-                            <div class="text-2xl text-gray-100 font-medium leading-8 mt-5">99</div>
-                            <div class="text-sm text-gray-500">Projects</div>
-                        </div>
-                    </div>
-                    <div class="col-span-12 sm:col-span-4">
-                        <div class="p-4 relative  bg-gray-800 border border-gray-800 shadow-lg  rounded-2xl">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="h-14 w-14  absolute bottom-4 right-3 text-yellow-300" viewBox="0 0 20 20"
-                                fill="currentColor">
-                                <path fill-rule="evenodd"
-                                    d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            <div class="flex justify-between items-center ">
-                                <i class="fab fa-codepen text-xl text-gray-400"></i>
-                            </div>
-                            <div class="text-2xl text-gray-100 font-medium leading-8 mt-5">50</div>
-                            <div class="text-sm text-gray-500">Pen Items</div>
-                        </div>
-                    </div> --}}
                 </div>
-                {{-- </div> --}}
             @endforeach
 
         </div>
-
         {{-- <div class="grid grid-cols-12 gap-4 ">
             <div class="col-span-12 sm:col-span-4">
                 <div class="p-4 relative  bg-gray-800 border border-gray-800 shadow-lg  rounded-2xl">
