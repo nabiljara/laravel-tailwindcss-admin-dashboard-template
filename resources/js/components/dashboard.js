@@ -41,7 +41,7 @@ const dashboard = () => {
     tabs.show(CSS.escape(buttons[0].id));
 
     const client = connection();
-    // const topic = "Estación-123501-Sensor-525320/temp";
+    const topic = "Alertas";
 
     const topics = [
         "Estación-123501-Sensor-525320/temp",
@@ -78,31 +78,39 @@ const dashboard = () => {
     ];
 
     //topics.forEach((topic) => {
-    //    client.subscribe(topic, () => {
-    //        console.log(`Subscribed to topic '${topic}'`);
+        client.subscribe(topic, () => {
+            console.log(`Subscribed to topic '${topic}'`);
     // Aquí puedes realizar otras acciones una vez que te suscribas al tema
-    //    });
+       });
     //});
 
     client.on("message", (topic, payload) => {
-        const station_id = topic.split("-")[1];
-        const measure = topic.split("/").pop();
-        console.log(station_id);
-        console.log(measure);
+        
+        if (!topic == "Alertas"){
 
-        triggerElId = CSS.escape(station_id);
-        console.log(triggerElId);
-
-        tabs
-            .getTab(triggerElId)
-            .targetEl.querySelector(`.${measure}`).textContent = payload;
+            const station_id = topic.split("-")[1];
+            const measure = topic.split("/").pop();
+            //console.log(station_id);
+            //console.log(measure);
+    
+            triggerElId = CSS.escape(station_id);
+            //console.log(triggerElId);
+    
+            tabs
+                .getTab(triggerElId)
+                .targetEl.querySelector(`.${measure}`).textContent = payload;
+        }else{
+            console.log(payload.body);
+        }
     });
+
     // get the tab object based on ID
     // console.log(tabs.getTab(triggerElId).targetEl.querySelector(".measure"));
     // tabs.getTab(triggerElId).targetEl.querySelector(".measure").textContent = "Hola"; //Forma de acceder al componente correctamente.
     // get the current active tab object
 
-    
+   
+     
 };
 
 export default dashboard;

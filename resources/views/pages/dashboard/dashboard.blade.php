@@ -546,47 +546,47 @@
 
         <script>
             const estaciones = {
-                    123501 : {
-                        "temp" : 525320,
-                        "hum" : 525320,
-                        "dew_point" : 525320,
-                        "wind_speed_last" : 464200,
-                        "rain_storm_last_mm" : 464200,
-                        "battery_voltage" : 462215,
-                        "bar_absolute" : 462216
-                    },
-                    138225 : {
-                        "temp" : 525327,
-                        "hum" : 525327,
-                        "dew_point" : 525327,
-                        "battery_voltage" : 525169,
-                        "bar_absolute" : 525170
-                    },
-                    145839 : {
-                        "temp" : 653825,
-                        "hum" : 653825,
-                        "dew_point" : 653825,
-                        "wind_speed_last" : 653824,
-                        "wind_dir_last" : 653824,
-                        "rain_storm_last_mm" : 653824,
-                        "battery_voltage" : 653824,
-                        "bar-absolute" : 557448
-                    },
-                    145862 : {
-                        "temp" : 558414,
-                        "hum" : 558414,
-                        "dew_point" : 558414,
-                        "battery_voltage" : 557536,
-                        "bar_absolute" : 557537
-                    },
-                    167442 : {
-                        "temp" : 653139,
-                        "hum" : 653139,
-                        "dew_point" : 653139,
-                        "battery_voltage" : 650012,
-                        "bar_absolute" : 650019
-                    }
-                };
+                123501: {
+                    "temp": 525320,
+                    "hum": 525320,
+                    "dew_point": 525320,
+                    "wind_speed_last": 464200,
+                    "rain_storm_last_mm": 464200,
+                    "battery_voltage": 462215,
+                    "bar_absolute": 462216
+                },
+                138225: {
+                    "temp": 525327,
+                    "hum": 525327,
+                    "dew_point": 525327,
+                    "battery_voltage": 525169,
+                    "bar_absolute": 525170
+                },
+                145839: {
+                    "temp": 653825,
+                    "hum": 653825,
+                    "dew_point": 653825,
+                    "wind_speed_last": 653824,
+                    "wind_dir_last": 653824,
+                    "rain_storm_last_mm": 653824,
+                    "battery_voltage": 653824,
+                    "bar-absolute": 557448
+                },
+                145862: {
+                    "temp": 558414,
+                    "hum": 558414,
+                    "dew_point": 558414,
+                    "battery_voltage": 557536,
+                    "bar_absolute": 557537
+                },
+                167442: {
+                    "temp": 653139,
+                    "hum": 653139,
+                    "dew_point": 653139,
+                    "battery_voltage": 650012,
+                    "bar_absolute": 650019
+                }
+            };
 
 
             // MODAL SELECT
@@ -695,7 +695,7 @@
 
                 var topicoElegido = document.getElementById("topico_oculto").innerHTML;
                 var sensorEstacion = estaciones[stationName][topicoElegido];
-                
+
                 console.log(topicoElegido);
                 var valorMin = document.getElementById(topicoElegido + "_min").value;
                 var valorMax = document.getElementById(topicoElegido + "_max").value;
@@ -704,7 +704,7 @@
                 // Publica la regla
                 const apiUrl = new URL("http://localhost:3000/apiv1/createRule");
 
-                axios.post(apiUrl, {
+               /*  axios.post(apiUrl, {
                         JSON.stringify({
                             station_name: stationName,
                             sensor: sensorEstacion,
@@ -725,14 +725,9 @@
                     .then((error) => {
                         console.log(error);
                         mostrarToast("tst_alerta_no");
-                    });
+                    }); */
 
             });
-
-
-
-          
-
         </script>
 
 </x-app-layout>
