@@ -3,11 +3,6 @@
     {{-- @dd($topics) --}}
     <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
 
-
-        <button onclick="generarAlerta()" id="triggerElement" type="button"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Hide
-            alert</button>
-
         <!-- Alertas -->
         <div id="alerta"
             class="hidden flex items-center p-4 mb-4 text-red-800 border-t-4 border-red-300 bg-red-50 dark:text-red-400 dark:bg-gray-800 dark:border-red-800"
@@ -110,7 +105,7 @@
             <!-- Modal toggle -->
             <button data-modal-target="crud-modal" data-modal-toggle="crud-modal"
                 class="ms-auto block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                type="button">
+                type="button" onclick="cargarModal()">
                 Crear notificación
             </button>
 
@@ -160,27 +155,29 @@
                                 <div id="topicos">
                                     @foreach ($topics as $topic => $name_topic)
                                         <div id="div_{{ $topic }}" class="hidden">
-                                            <div class="relative z-0 w-full mb-6 group" id="{{ $topic }}_max">
+                                            <div class="relative z-0 w-full mb-6 group">
                                                 <input type="number" name="{{ $topic }}_max"
                                                     id="{{ $topic }}_max"
                                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                                     placeholder=" " />
                                                 <label for="{{ $topic }}_max"
                                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">{{ $name_topic }}
-                                                    maxima</label>
+                                                    max</label>
                                             </div>
-                                            <div class="relative z-0 w-full mb-6 group" id="{{ $topic }}_min">
+                                            <div class="relative z-0 w-full mb-6 group">
                                                 <input type="number" name="{{ $topic }}_min"
                                                     id="{{ $topic }}_min"
                                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                                     placeholder=" " />
                                                 <label for="{{ $topic }}_min"
                                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">{{ $name_topic }}
-                                                    minima</label>
+                                                    min</label>
                                             </div>
                                         </div>
                                     @endforeach
                                 </div>
+
+                                <p id="topico_oculto" hidden></p>
 
                                 <button type="submit"
                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Crear</button>
@@ -206,23 +203,25 @@
                             <div class="p-4 relative bg-gray-800 border border-gray-800 shadow-lg rounded-2xl">
                                 @switch($topic)
                                     @case('temp')
-                                    <svg class="h-8 w-8 text-red-500" width="24" height="24" viewBox="0 0 24 24"
-                                                stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" />
-                                                <path d="M10 13.5a4 4 0 1 0 4 0v-8.5a2 2 0 0 0 -4 0v8.5" />
-                                                <line x1="10" y1="9" x2="14" y2="9" />
-                                            </svg>
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                <div class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5"> - </div>
-                                            </td>
-                                            <td>
-                                                <div class="text-2xl text-gray-100 font-medium leading-8 mt-5">° C</div>                                            
-                                            </td>
-                                        </tr>
-                                    </table>
+                                        <svg class="h-8 w-8 text-red-500" width="24" height="24" viewBox="0 0 24 24"
+                                            stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" />
+                                            <path d="M10 13.5a4 4 0 1 0 4 0v-8.5a2 2 0 0 0 -4 0v8.5" />
+                                            <line x1="10" y1="9" x2="14" y2="9" />
+                                        </svg>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div
+                                                        class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5">
+                                                        - </div>
+                                                </td>
+                                                <td>
+                                                    <div class="text-2xl text-gray-100 font-medium leading-8 mt-5">° C</div>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     @break
 
                                     @case('hum')
@@ -235,9 +234,13 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <div class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5"> - </div>
+                                                    <div
+                                                        class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5">
+                                                        - </div>
                                                 </td>
-                                                <td><div class="text-2xl text-gray-100 font-medium leading-8 mt-5">%</div></td>
+                                                <td>
+                                                    <div class="text-2xl text-gray-100 font-medium leading-8 mt-5">%</div>
+                                                </td>
                                             </tr>
                                         </table>
                                     @break
@@ -257,9 +260,13 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <div class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5"> - </div>
+                                                    <div
+                                                        class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5">
+                                                        - </div>
                                                 </td>
-                                                <td><div class="text-2xl text-gray-100 font-medium leading-8 mt-5">° C</div></td>
+                                                <td>
+                                                    <div class="text-2xl text-gray-100 font-medium leading-8 mt-5">° C</div>
+                                                </td>
                                             </tr>
                                         </table>
                                     @break
@@ -276,9 +283,13 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <div class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5"> - </div>
+                                                    <div
+                                                        class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5">
+                                                        - </div>
                                                 </td>
-                                                <td><div class="text-2xl text-gray-100 font-medium leading-8 mt-5">   km/h</div></td>
+                                                <td>
+                                                    <div class="text-2xl text-gray-100 font-medium leading-8 mt-5"> km/h</div>
+                                                </td>
                                             </tr>
                                         </table>
                                     @break
@@ -294,9 +305,13 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <div class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5"> - </div>
+                                                    <div
+                                                        class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5">
+                                                        - </div>
                                                 </td>
-                                                <td><div class="text-2xl text-gray-100 font-medium leading-8 mt-5">°</div></td>
+                                                <td>
+                                                    <div class="text-2xl text-gray-100 font-medium leading-8 mt-5">°</div>
+                                                </td>
                                             </tr>
                                         </table>
                                     @break
@@ -313,9 +328,13 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <div class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5"> - </div>
+                                                    <div
+                                                        class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5">
+                                                        - </div>
                                                 </td>
-                                                <td><div class="text-2xl text-gray-100 font-medium leading-8 mt-5"> mm</div></td>
+                                                <td>
+                                                    <div class="text-2xl text-gray-100 font-medium leading-8 mt-5"> mm</div>
+                                                </td>
                                             </tr>
                                         </table>
                                     @break
@@ -333,9 +352,13 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <div class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5"> - </div>
+                                                    <div
+                                                        class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5">
+                                                        - </div>
                                                 </td>
-                                                <td><div class="text-2xl text-gray-100 font-medium leading-8 mt-5">%</div></td>
+                                                <td>
+                                                    <div class="text-2xl text-gray-100 font-medium leading-8 mt-5">%</div>
+                                                </td>
                                             </tr>
                                         </table>
                                     @break
@@ -349,14 +372,20 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <div class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5"> - </div>
+                                                    <div
+                                                        class="{{ $topic }} text-2xl text-gray-100 font-medium leading-8 mt-5">
+                                                        - </div>
                                                 </td>
-                                                <td><div class="text-2xl text-gray-100 font-medium leading-8 mt-5"> mbar</div></td>
+                                                <td>
+                                                    <div class="text-2xl text-gray-100 font-medium leading-8 mt-5"> mbar</div>
+                                                </td>
                                             </tr>
                                         </table>
                                     @break
                                 @endswitch
-                                <b><div class="text-sm text-gray-500">{{ $name_topic }}</div></b>
+                                <b>
+                                    <div class="text-sm text-gray-500">{{ $name_topic }}</div>
+                                </b>
                             </div>
                         </div>
                     @endforeach
@@ -430,17 +459,17 @@
                             <svg class="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                 <path
-                                    d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                                d="M8 3.464V1.1m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175C15 15.4 15 16 14.462 16H1.538C1 16 1 15.4 1 14.807c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 8 3.464ZM4.54 16a3.48 3.48 0 0 0 6.92 0H4.54Z">
                             </svg>
                         </span>
                         <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
                             {{ $notificacion['nombre_topico'] }}<span
-                                class="bg-{{ $notificacion['atributo'] == 'Maxima' ? 'red' : 'blue' }}-100 text-{{ $notificacion['atributo'] == 'Maxima' ? 'red' : 'blue' }}-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-{{ $notificacion['atributo'] == 'Maxima' ? 'red' : 'blue' }}-900 dark:text-{{ $notificacion['atributo'] == 'Maxima' ? 'red' : 'blue' }}-300 ms-3">{{ $notificacion['atributo'] }}</span>
+                                class="bg-{{ $notificacion['atributo'] == 'MAX' ? 'red' : 'blue' }}-100 text-{{ $notificacion['atributo'] == 'MAX' ? 'red' : 'blue' }}-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-{{ $notificacion['atributo'] == 'MAX' ? 'red' : 'blue' }}-900 dark:text-{{ $notificacion['atributo'] == 'MAX' ? 'red' : 'blue' }}-300 ms-3">{{ $notificacion['atributo'] }}</span>
                         </h3>
                         <time
                             class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{{ $notificacion['fecha_hora'] }}</time>
                         <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-                            {{ ($notificacion['atributo'] == 'Maxima' ? 'Supero el valor ' : 'Por debajo del valor ') . $notificacion['valor'] . $notificacion['unidad'] }}
+                            {{ ($notificacion['atributo'] == 'MAX' ? 'Supero el valor ' : 'Por debajo del valor ') . $notificacion['valor'] . $notificacion['unidad'] }}
                         </p>
                     </li>
                 @endforeach
@@ -511,25 +540,178 @@
         </div>
 
         <script>
-            // // MODAL SELECT
-            // function opcionSeleccionada(id) {
+            const stations = {
+                123501: {
+                    "name": "Cielos del Sur", //
+                    "topics": {
+                        "temp": 525320,
+                        "hum": 525320,
+                        "dew_point": 525320,
+                        "wind_speed_last": 464200,
+                        "rain_storm_last_mm": 464200,
+                        "battery_voltage": 462215,
+                        "bar_absolute": 462216
+                    }
+                },
+                138225: {
+                    "name": "Glyn", //
+                    "topics": {
+                        "temp": 525327,
+                        "hum": 525327,
+                        "dew_point": 525327,
+                        "battery_voltage": 525169,
+                        "bar_absolute": 525170
+                    }
+                },
+                145839: {
+                    "name": "Villa Favaloro (Los Antiguos)",
+                    "topics": {
+                        "temp": 653825,
+                        "hum": 653825,
+                        "dew_point": 653825,
+                        "wind_speed_last": 653824,
+                        "wind_dir_last": 653824,
+                        "rain_storm_last_mm": 653824,
+                        "battery_voltage": 653824,
+                        "bar-absolute": 557448
+                    }
+                },
+                145862: {
+                    "name": "Las Santinas VIRCH",
+                    "topics": {
+                        "temp": 558414,
+                        "hum": 558414,
+                        "dew_point": 558414,
+                        "battery_voltage": 557536,
+                        "bar_absolute": 557537
+                    }
+                },
+                167442: {
+                    "name": "Glyn 3",
+                    "topics": {
+                        "temp": 653139,
+                        "hum": 653139,
+                        "dew_point": 653139,
+                        "battery_voltage": 650012,
+                        "bar_absolute": 650019
+                    }
+                }
+            };
 
-            //     var elemento = document.getElementById('div_' + id);
+            const topicsAttr = {
+            "temp": {
+                "description": "Temperatura",
+                "unit": "° C",
+            },
+            "hum": {
+                "description": "Humedad",
+                "unit": "%",
+            },
+            "dew_point": {
+                "description": "Punto de rocio",
+                "unit": "° C",
+            },
+            "wind_speed_last": {
+                "description": "Velocidad del viento",
+                "unit": "km/h",
+            },
+            "wind_dir_last": {
+                "description": "Dirección del viento",
+                "unit": "°",
+            },
+            "rain_storm_last_mm": {
+                "description": "Lluvia",
+                "unit": "mm",
+            },
+            "battery_voltage": {
+                "description": "Batería",
+                "unit": "%",
+            },
+            "bar_absolute": {
+                "description": "Presión",
+                "unit": "mbar",
+            },
+            };
 
-            //     var nodos = document.getElementById('topicos').querySelectorAll('[id^="div_"]');
-            //     nodos.forEach((item) => {
-            //         if (!item.classList.contains("hidden")) {
-            //             item.classList.toggle("hidden");
-            //         }
-            //     });
+
+            function cargarModal() {
+                // colocar header
+                const stationId = document.getElementById('tabs').querySelector('[aria-selected="true"]').id;
+                var headerModal = document.getElementById("crud-modal").querySelector("h3");
+                headerModal.innerHTML = "Crear notificación para " + stations[stationId]["name"];
+
+                // ocultar todos 
+                var nodos = document.getElementById('topicos').querySelectorAll('[id^="div_"]');
+                nodos.forEach((item) => {
+                    if (!item.classList.contains("hidden")) {
+                        item.classList.toggle("hidden"); // toggle no funciona en chrome
+                        /*
+                        if (item.style.display == "block") {
+                            item.style.display = "none";
+                        } else {
+                            item.style.display = "block";
+                        }
+                        */
+                    }
+                });
+
+                var selectModal = document.getElementById("crud-modal").querySelector("#underline_select");
+
+                // vaciar select 
+                for (o in selectModal.options) { selectModal.options.remove(0); }
+
+                //cargar select
+                Object.keys(stations[stationId]["topics"]).forEach(t => {
+                    //console.log(key, obj[key]);
+                    var opt = document.createElement("option");
+
+                    opt.setAttribute('value', t);
+                    opt.setAttribute('onclick', 'opcionSeleccionada("'+ t +'")');
+                    opt.innerHTML = topicsAttr[t]['description']; // whatever property it has
+
+                    // then append it to the select element
+                    selectModal.appendChild(opt);
+                });
+            }
+
+            // MODAL SELECT
+            function opcionSeleccionada(id) {
+                var elemento = document.getElementById('div_' + id);
+
+                var nodos = document.getElementById('topicos').querySelectorAll('[id^="div_"]');
+                nodos.forEach((item) => {
+                    if (!item.classList.contains("hidden")) {
+                        item.classList.toggle("hidden"); // toggle no funciona en chrome
+                        /*
+                        if (item.style.display == "block") {
+                            item.style.display = "none";
+                        } else {
+                            item.style.display = "block";
+                        }
+                        */
+                    }
+                });
 
             //     nodos = document.getElementById('topicos').querySelectorAll('input');
             //     nodos.forEach((item) => {
             //         item.value = "";
             //     });
 
-            //     elemento.classList.toggle("hidden");
-            // };
+                elemento.classList.toggle("hidden"); // toggle no funciona en chrome 
+                /*
+                if (elemento.style.display == "block") {
+                    elemento.style.display = "none";
+                } else {
+                    elemento.style.display = "block";
+                }
+                */
+
+                document.getElementById("topico_oculto").innerHTML = id;
+            };
+
+            function vaciarSelectModal() {
+                
+            }
 
 
             // // ALERTAS
@@ -540,10 +722,10 @@
             //     alerta = document.getElementById("alerta");
             //     alerta.classList.toggle("hidden");
 
-            //     setTimeout(function() {
-            //         ocultarAlerta();
-            //     }, 10000);
-            // }
+                setTimeout(function() {
+                    ocultarElemento("alerta");
+                }, 10000);
+            }
 
             // function ocultarElemento(idElemento) {
             //     // target element that will be dismissed
@@ -553,17 +735,17 @@
             //     const $triggerEl = document.getElementById("triggerElement");
 
             //     // options object
-            //     const optionsAlert = {
-            //         transition: "transition-opacity",
-            //         duration: 1000,
-            //         timing: "ease-out",
+                const optionsAlert = {
+                    transition: "transition-opacity",
+                    duration: 1000,
+                    timing: "ease-out",
 
-            //         // callback functions
-            //         onHide: (context, targetEl) => {
-            //             console.log("element has been dismissed");
-            //             console.log(targetEl);
-            //         },
-            //     };
+                    // callback functions
+                    //onHide: (context, targetEl) => {
+                    //    console.log("element has been dismissed");
+                    //    console.log(targetEl);
+                    //},
+                };
 
             //     // instance options object
             //     const instanceOptionsAlert = {
@@ -586,116 +768,78 @@
             //     );
 
             //     // hide the target element
-            //     dismiss.hide();
-            // }
+                dismiss.hide();
+            }
+
+            function mostrarToast(idToast) {
+                console.log("mostrar toast")
+                tstNotificacion = document.getElementById(idToast);
+                tstNotificacion.classList.toggle("hidden");
+
+                setTimeout(function() {
+                    ocultarElemento(idToast);
+                }, 10000);
+            }
+
+            function mostrarToast(idToast) {
+                console.log("mostrar toast")
+                tstNotificacion = document.getElementById(idToast);
+                tstNotificacion.classList.toggle("hidden");
+
+                setTimeout(function() {
+                    ocultarElemento(idToast);
+                }, 10000);
+            }
 
 
-            // // FORM NOTIFICACIONES | REGLAS
-            // const form = document.getElementById("formulario");
-            // form.addEventListener("submit", (event) => {
-            //             event.preventDefault()
+            // FORM NOTIFICACIONES | REGLAS
+            const form = document.getElementById("formulario");
+            form.addEventListener("submit", (event) => {
+                event.preventDefault()
 
-            //             const client = connection();
+                //const stationName = dashboard.tabs.getActiveTab().targetEl.getAttribute('aria-labelledby');
+                const stationId = document.getElementById('tabs').querySelector('[aria-selected="true"]').id;
+                var headerModal = document.getElementById("crud-modal").querySelector("h3");
+                headerModal.innerHTML = "Crear notificacion para " + stations[stationId]["name"];
 
-            //             stationName = tabs.getActiveTab().targetEl.getAttribute('aria-labelledby');
-
-            //             var query = "SELECT * FROM " + stationName + " WHERE"; // stationName
-            //             var payload = '{"topic": " + stationName + ", "data": {'; // stationName
-
-            //             ids = {
-            //                 'temperatura_max': ' payload.data.temp <=  ',
-            //                 'temperatura_min': ' payload.data.temp >= ',
-            //                 'viento,_max': ' payload.data.wind_speed_hi_last_2_min <= ',
-            //                 'viento_min': ' payload.data.wind_speed_hi_last_2_min >= ',
-            //                 'humedad_max': ' payload.data.hum <= ',
-            //                 'humedad_min': ' payload.data.hum >= ',
-            //                 'rocio_max': ' payload.data.dew_point <= ',
-            //                 'rocio_min': ' payload.data.dew_point >= '
-            //             };
-
-            //             atributos = {}; // setear
-
-            //             var valor;
-            //             var primero = true;
-            //             var atributo;
-            //             ids.forEach(function(id) {
-            //                 valor = document.getElementById(id);
-            //                 if (valor != '') {
-            //                     primero = false;
-            //                 };
-            //                 query += (primero ? 'AND' : '') + ids[id] + valor;
-
-            //                 atributo = id.slice(0, id.indexOf('_'));
-            //                 if (!atributos[artributo] && (document.getElementById(atributo + '_max') != '' ||
-            //                         document
-            //                         .getElementById(atributo + '_min'))) {
-            //                     atributos[artributo] = true;
-            //                     payload += ((ids[id].split('.'))[3]).slice(0, id.indexOf(' ')) + ': ' +
-            //                         'DATO_ACTUAL'; // dato actual     
-            //                     // payload += '"temp": \${payload.data.temp}, ';
-            //                 }
-
-            //             });
-
-            //             query += ';';
-
-            //             payload = payload.substring(0, payload.length - 2);
-            //             payload += '}}';
+                //var payload = '{ topic : ' + stationName + ', data : {';
 
 
-            //             // Publica la regla
-            //             const username = '0864e2a5beed02b6';
-            //             const password = 'QHiMVaBAiortnOrw33hk0hHxLqlAwlt1zzb6hud0USJ';
+                var topicoElegido = document.getElementById("topico_oculto").innerHTML;
+                var sensorEstacion = estaciones[stationId][topicoElegido];
 
-            //             const apiUrl = new URL("http://150.230.80.1:18083/api/v5/rules");
-            //             const basicAuth = 'Basic ' + btoa(`${username}:${password}`);
+                console.log(topicoElegido);
+                var valorMin = document.getElementById(topicoElegido + "_min").value;
+                var valorMax = document.getElementById(topicoElegido + "_max").value;
+                var datoActual = 0;
 
-            //             axios.post(apiUrl, {
-            //                     headers: {
-            //                         "Content-Type": "application/json",
-            //                         "Authorization": basicAuth // Auth
-            //                     },
-            //                     body: jsonEncode({
-            //                             "name": "Rule-" + stationName + "-Alarm",
-            //                             "sql": query,
-            //                             "actions": [
-            //                                 "webhook:alarm",
-            //                                 {
-            //                                     "args": {
-            //                                         "payload": payload,
-            //                                         "topic": "Alertas",
-            //                                         "qos": 2,
-            //                                         "retain": "false"
-            //                                     },
-            //                                     "function": "republish",
-            //                                 },
-            //                             ],
-            //                             "enable": true,
-            //                             "description": "Some description",
-            //                             "metadata": {}
-            //                         }
-            //                     })
-            //                 .then((response) =>
-            //                     console.log(response.data);
-            //                     if (response.statusCode == 201) {
-            //                         mostrarToast("tst_alerta_si"):
-            //                     } else {
-            //                         mostrarToast("tst_alerta_no");
-            //                     }
-            //                 )
-            //                 .then((error) => console.log(error); mostrarToast("tst_alerta_no"););
+                // Publica la regla
+                const apiUrl = new URL("http://localhost:3000/apiv1/createRule");
 
-            //             });
+                /*  axios.post(apiUrl, {
+                         JSON.stringify({
+                             station_name: stationId,
+                             sensor: sensorEstacion,
+                             topico: topicoElegido,
+                             min: valorMin,
+                             max: valorMax,
+                             dato_actual: datoActual
+                         });
+                     })
+                     .then((response) => {
+                         console.log(response.data);
+                         if (response.statusCode == 201) {
+                             mostrarToast("tst_alerta_si");
+                         } else {
+                             mostrarToast("tst_alerta_no");
+                         }
+                     })
+                     .then((error) => {
+                         console.log(error);
+                         mostrarToast("tst_alerta_no");
+                     }); */
 
-            //         function mostrarToast(idToast) {
-            //             console.log("mostrar toast")
-            //             tstNotificacion = document.getElementById(idToast);
-            //             tstNotificacion.classList.toggle("hidden");
-
-            //             setTimeout(function() {
-            //                 ocultarElemento(idToast);
-            //             }, 10000);
-            //         }
+            });
         </script>
 
 </x-app-layout>

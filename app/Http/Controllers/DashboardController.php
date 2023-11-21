@@ -41,6 +41,14 @@ class DashboardController extends Controller
 
         $topics = ['temp' => 'Temperatura', 'hum' => 'Humedad', 'dew_point' => 'Punto de rocio', 'wind_speed_last' => 'Velocidad del viento', 'wind_dir_last' => 'Dirección del viento', 'rain_storm_last_mm' => 'Lluvia', 'battery_voltage' => 'Batería', 'bar_absolute' => 'Presión'];
 
+        $stationTopics = [
+            123501 => ['temp', 'hum', 'dew_point', 'wind_speed_last', 'wind_dir_last', 'rain_storm_last_mm', 'battery_voltage', 'bar_absolute'],
+            138225 => ['temp', 'hum', 'dew_point', 'battery_voltage', 'bar_absolute'],
+            145839 => ['temp', 'hum', 'dew_point', 'wind_speed_last', 'wind_dir_last', 'rain_storm_last_mm', 'battery_voltage', 'bar-absolute'],
+            145862 => ['temp', 'hum', 'dew_point', 'battery_voltage', 'bar_absolute'],
+            167442 => ['temp', 'hum', 'dew_point', 'battery_voltage', 'bar_absolute']
+        ];
+
         // Notificaciones
         $notificacion1 = [
             'topico' => 'temp',
