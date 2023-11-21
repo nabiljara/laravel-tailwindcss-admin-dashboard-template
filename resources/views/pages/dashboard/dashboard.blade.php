@@ -724,10 +724,10 @@
             //     alerta = document.getElementById("alerta");
             //     alerta.classList.toggle("hidden");
 
-                setTimeout(function() {
-                    ocultarElemento("alerta");
-                }, 10000);
-            }
+                // setTimeout(function() {
+                //     ocultarElemento("alerta");
+                // }, 10000);
+            
 
             // function ocultarElemento(idElemento) {
             //     // target element that will be dismissed
@@ -770,8 +770,8 @@
             //     );
 
             //     // hide the target element
-                dismiss.hide();
-            }
+                // dismiss.hide();
+            
 
             function mostrarToast(idToast) {
                 console.log("mostrar toast")

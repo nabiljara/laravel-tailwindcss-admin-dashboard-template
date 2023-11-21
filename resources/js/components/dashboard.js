@@ -132,7 +132,7 @@ const dashboard = () => {
             break;
             case "dew_point":payload = ((parseFloat(payload) - 32)*5/9).toFixed(1);
             break;
-            case "":;
+            case "wind_speed_last": payload = (parseFloat(payload) * 1.60934).toFixed(1); // Convertir millas/h a km/h
             break;
         }
 
@@ -170,6 +170,7 @@ const dashboard = () => {
 };
 
 export default dashboard;
+
 
 // Cielos del sur:
 
