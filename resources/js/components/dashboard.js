@@ -1,8 +1,43 @@
 import { Tabs, Dismiss } from "flowbite";
 import connection from "./connection.js";
-import axios from 'axios';
+import axios from "axios";
 
 const dashboard = () => {
+    const topicsAttr = {
+        temp: {
+            description: "Temperatura",
+            unit: "° C",
+        },
+        hum: {
+            description: "Humedad",
+            unit: "%",
+        },
+        dew_point: {
+            description: "Punto de rocio",
+            unit: "° C",
+        },
+        wind_speed_last: {
+            description: "Velocidad del viento",
+            unit: "km/h",
+        },
+        wind_dir_last: {
+            description: "Dirección del viento",
+            unit: "°",
+        },
+        rain_storm_last_mm: {
+            description: "Lluvia",
+            unit: "mm",
+        },
+        battery_voltage: {
+            description: "Batería",
+            unit: "%",
+        },
+        bar_absolute: {
+            description: "Presión",
+            unit: "mbar",
+        },
+    };
+
     const tabsElement = document.getElementById("tabs");
     const tabElements = [];
     const buttons = document.querySelectorAll("button.station");
@@ -41,7 +76,7 @@ const dashboard = () => {
     tabs.show(CSS.escape(buttons[0].id));
 
     const client = connection();
-    const topic = "Alertas";
+    // const topic = "Alertas";
 
     const topics = [
         "Estación-123501-Sensor-525320/temp",
@@ -77,32 +112,46 @@ const dashboard = () => {
         "Estación-167442-Sensor-650019/bar_absolute",
     ];
 
-    //topics.forEach((topic) => {
+    topics.forEach((topic) => {
         client.subscribe(topic, () => {
             console.log(`Subscribed to topic '${topic}'`);
-    // Aquí puedes realizar otras acciones una vez que te suscribas al tema
-       });
-    //});
+            // Aquí puedes realizar otras acciones una vez que te suscribas al tema
+        });
+    });
 
     client.on("message", (topic, payload) => {
-        
-        if (!topic == "Alertas"){
-
+        console.log(topic);
+        console.log(payload);
+        if (!(topic === "Alertas")) {
             const station_id = topic.split("-")[1];
             const measure = topic.split("/").pop();
             //console.log(station_id);
             //console.log(measure);
-    
+
             triggerElId = CSS.escape(station_id);
             //console.log(triggerElId);
-    
+
             tabs
                 .getTab(triggerElId)
                 .targetEl.querySelector(`.${measure}`).textContent = payload;
-        }else{
-            var msj = new TextDecoder().decode(payload);
-            console.log(msj);
-            generarAlerta(msj);
+        } else {
+            
+            var str = new TextDecoder().decode(payload);
+            var obj = JSON.parse(str);
+            console.log(obj.data.temp);
+
+            // enviar valor que supera
+            //fecha = obj.data.timestamp.toLocaleString("es-ES");
+
+            var mensaje =
+                topicsAttr[obj.data.temp]["description"] +
+                " actual de " +
+                valor +
+                topicsAttr[obj.data.temp]["unit"] +
+                " exedio el umbral aceptable.";
+            // var mensaje = topicsAttr[obj.data.temp]["description"] + ' supero el valor ' + valor + topicsAttr[obj.data.temp]["unit"];
+
+            generarAlerta(mensaje);
         }
     });
 
@@ -110,9 +159,6 @@ const dashboard = () => {
     // console.log(tabs.getTab(triggerElId).targetEl.querySelector(".measure"));
     // tabs.getTab(triggerElId).targetEl.querySelector(".measure").textContent = "Hola"; //Forma de acceder al componente correctamente.
     // get the current active tab object
-
-   
-     
 };
 
 export default dashboard;

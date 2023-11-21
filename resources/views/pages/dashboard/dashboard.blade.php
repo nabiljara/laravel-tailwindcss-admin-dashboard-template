@@ -10,7 +10,7 @@
             <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                 viewBox="0 0 20 20">
                 <path
-                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    d="M18.012 13.453c-.219-1.173-2.163-1.416-2.6-3.76l-.041-.217c0 .006 0-.005-.007-.038v.021l-.017-.09-.005-.025v-.006l-.265-1.418a5.406 5.406 0 0 0-5.051-4.408.973.973 0 0 0 0-.108L9.6 1.082a1 1 0 0 0-1.967.367l.434 2.325a.863.863 0 0 0 .039.1A5.409 5.409 0 0 0 4.992 9.81l.266 1.418c0-.012 0 0 .007.037v-.007l.006.032.009.046v-.01l.007.038.04.215c.439 2.345-1.286 3.275-1.067 4.447.11.586.22 1.173.749 1.074l12.7-2.377c.523-.098.413-.684.303-1.27ZM1.917 9.191h-.074a1 1 0 0 1-.924-1.07 9.446 9.446 0 0 1 2.426-5.648 1 1 0 1 1 1.482 1.343 7.466 7.466 0 0 0-1.914 4.449 1 1 0 0 1-.996.926Zm5.339 8.545A3.438 3.438 0 0 0 10 19.1a3.478 3.478 0 0 0 3.334-2.5l-6.078 1.136Z" />
             </svg>
             <div id="mensaje_alerta" class="ms-3 text-sm font-medium">
                 A simple danger alert with an <a href="#"
@@ -459,7 +459,7 @@
                             <svg class="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                 <path
-                                d="M8 3.464V1.1m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175C15 15.4 15 16 14.462 16H1.538C1 16 1 15.4 1 14.807c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 8 3.464ZM4.54 16a3.48 3.48 0 0 0 6.92 0H4.54Z">
+                                    d="M8 3.464V1.1m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175C15 15.4 15 16 14.462 16H1.538C1 16 1 15.4 1 14.807c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 8 3.464ZM4.54 16a3.48 3.48 0 0 0 6.92 0H4.54Z">
                             </svg>
                         </span>
                         <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
@@ -599,38 +599,38 @@
             };
 
             const topicsAttr = {
-            "temp": {
-                "description": "Temperatura",
-                "unit": "° C",
-            },
-            "hum": {
-                "description": "Humedad",
-                "unit": "%",
-            },
-            "dew_point": {
-                "description": "Punto de rocio",
-                "unit": "° C",
-            },
-            "wind_speed_last": {
-                "description": "Velocidad del viento",
-                "unit": "km/h",
-            },
-            "wind_dir_last": {
-                "description": "Dirección del viento",
-                "unit": "°",
-            },
-            "rain_storm_last_mm": {
-                "description": "Lluvia",
-                "unit": "mm",
-            },
-            "battery_voltage": {
-                "description": "Batería",
-                "unit": "%",
-            },
-            "bar_absolute": {
-                "description": "Presión",
-                "unit": "mbar",
-            },
+                "temp": {
+                    "description": "Temperatura",
+                    "unit": "° C",
+                },
+                "hum": {
+                    "description": "Humedad",
+                    "unit": "%",
+                },
+                "dew_point": {
+                    "description": "Punto de rocio",
+                    "unit": "° C",
+                },
+                "wind_speed_last": {
+                    "description": "Velocidad del viento",
+                    "unit": "km/h",
+                },
+                "wind_dir_last": {
+                    "description": "Dirección del viento",
+                    "unit": "°",
+                },
+                "rain_storm_last_mm": {
+                    "description": "Lluvia",
+                    "unit": "mm",
+                },
+                "battery_voltage": {
+                    "description": "Batería",
+                    "unit": "%",
+                },
+                "bar_absolute": {
+                    "description": "Presión",
+                    "unit": "mbar",
+                },
             };
 
 
@@ -658,7 +658,9 @@
                 var selectModal = document.getElementById("crud-modal").querySelector("#underline_select");
 
                 // vaciar select 
-                for (o in selectModal.options) { selectModal.options.remove(0); }
+                for (o in selectModal.options) {
+                    selectModal.options.remove(0);
+                }
 
                 //cargar select
                 Object.keys(stations[stationId]["topics"]).forEach(t => {
@@ -666,7 +668,7 @@
                     var opt = document.createElement("option");
 
                     opt.setAttribute('value', t);
-                    opt.setAttribute('onclick', 'opcionSeleccionada("'+ t +'")');
+                    opt.setAttribute('onclick', 'opcionSeleccionada("' + t + '")');
                     opt.innerHTML = topicsAttr[t]['description']; // whatever property it has
 
                     // then append it to the select element
@@ -710,7 +712,7 @@
             };
 
             function vaciarSelectModal() {
-                
+
             }
 
 
@@ -787,48 +789,61 @@
             form.addEventListener("submit", (event) => {
                 event.preventDefault()
 
-                //const stationName = dashboard.tabs.getActiveTab().targetEl.getAttribute('aria-labelledby');
                 const stationId = document.getElementById('tabs').querySelector('[aria-selected="true"]').id;
                 var headerModal = document.getElementById("crud-modal").querySelector("h3");
                 headerModal.innerHTML = "Crear notificacion para " + stations[stationId]["name"];
 
-                //var payload = '{ topic : ' + stationName + ', data : {';
-
-
                 var topicoElegido = document.getElementById("topico_oculto").innerHTML;
-                var sensorEstacion = estaciones[stationId][topicoElegido];
+                var sensorEstacion = stations[stationId][topicoElegido];
 
                 console.log(topicoElegido);
                 var valorMin = document.getElementById(topicoElegido + "_min").value;
                 var valorMax = document.getElementById(topicoElegido + "_max").value;
-                var datoActual = 0;
 
                 // Publica la regla
                 const apiUrl = new URL("http://localhost:3000/apiv1/createRule");
 
-                /*  axios.post(apiUrl, {
-                         JSON.stringify({
-                             station_name: stationId,
-                             sensor: sensorEstacion,
-                             topico: topicoElegido,
-                             min: valorMin,
-                             max: valorMax,
-                             dato_actual: datoActual
-                         });
-                     })
-                     .then((response) => {
-                         console.log(response.data);
-                         if (response.statusCode == 201) {
-                             mostrarToast("tst_alerta_si");
-                         } else {
-                             mostrarToast("tst_alerta_no");
-                         }
-                     })
-                     .then((error) => {
-                         console.log(error);
-                         mostrarToast("tst_alerta_no");
-                     }); */
+                // Objeto con los datos a enviar en el cuerpo de la solicitud
+                const requestData = {
+                    station_id: stationId,
+                    sensor: sensorEstacion,
+                    atributo: topicoElegido,
+                    min: valorMin,
+                    max: valorMax
+                };
+/*
+                // Realizar la solicitud POST con Axios
+                axios.post(apiUrl, requestData)
+                    .then(response => {
+                        console.log('Respuesta del servidor:', response.data);
+                    })
+                    .catch(error => {
+                        console.error('Error en la solicitud:', error.response.data);
+                    });
 
+                
+                                axios.post(apiUrl, {
+                                        JSON.stringify({
+                                            station_id: stationId,
+                                            sensor: sensorEstacion,
+                                            atributo: topicoElegido,
+                                            min: valorMin,
+                                            max: valorMax
+                                        })
+                                    })
+                                    .then((response) => {
+                                        console.log(response.data);
+                                        if (response.statusCode == 201) {
+                                            mostrarToast("tst_alerta_si");
+                                        } else {
+                                            mostrarToast("tst_alerta_no");
+                                        }
+                                    })
+                                    .then((error) => {
+                                        console.log(error);
+                                        mostrarToast("tst_alerta_no");
+                                    });
+                */
             });
         </script>
 
