@@ -77,14 +77,88 @@ const dashboard = () => {
         "Estación-167442-Sensor-650019/bar_absolute",
     ];
 
-    //topics.forEach((topic) => {
-        client.subscribe(topic, () => {
-            console.log(`Subscribed to topic '${topic}'`);
+    // topics.forEach((topic) => {
+       client.subscribe(topic, () => {
+           console.log(`Subscribed to topic '${topic}'`);
     // Aquí puedes realizar otras acciones una vez que te suscribas al tema
        });
-    //});
+    // });
 
     client.on("message", (topic, payload) => {
+        if (!topic == "Alertas"){
+
+        const station_id = topic.split("-")[1];
+        const measure = topic.split("/").pop();
+        console.log(station_id);
+        console.log(measure);
+        
+        switch(measure){
+            case "temp": payload = ((parseFloat(payload) - 32)*5/9).toFixed(1);
+            break;
+            case "dew_point":payload = ((parseFloat(payload) - 32)*5/9).toFixed(1);
+            break;
+            case "":;
+            break;
+        }
+
+        triggerElId = CSS.escape(station_id);
+        console.log(triggerElId);
+
+        tabs
+            .getTab(triggerElId)
+            .targetEl.querySelector(`.${measure}`).textContent = payload;
+        }else{
+            var msj = new TextDecoder().decode(payload);
+            console.log(msj);
+            generarAlerta(msj);
+        }
+        });
+
+    // client.on("message", async (topic, payload) => {
+    //     const station_id = topic.split("-")[1];
+    //     const measure = topic.split("/").pop();
+    //     console.log(station_id);
+    //     console.log(measure);
+    
+    //     triggerElId = CSS.escape(station_id);
+    //     console.log(triggerElId);
+    
+    //     tabs
+    //         .getTab(triggerElId)
+    //         .targetEl.querySelector(`.${measure}`).textContent = payload;
+    
+    //     const dataToSave = {
+    //         station_id,
+    //         measure,
+    //         payload:payload.body,
+    //         created_at: new Date().toLocaleString('en-US', { timeZone: 'America/Buenos_Aires' }), // Format the timestamp as per your requirement
+    //     };
+
+    //     const url = 'http://localhost:3000/apiv1/saveNotifications';
+    
+    //     fetch(url, {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(dataToSave)
+    //     })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             console.log('Respuesta del servidor:', data);
+    //         })
+    //         .catch(error => {
+    //             console.error('Error en la solicitud:', error);
+    //         });
+        // Save data to the API
+        // try {
+        //     const response = await axios.post('http://localhost:3000/apiv1/saveData', dataToSave);
+        //     console.log(response.data);
+        // } catch (error) {
+        //     console.error('Error saving data:', error);
+        // }
+    // });
+
         
         if (!topic == "Alertas"){
 
@@ -104,7 +178,7 @@ const dashboard = () => {
             console.log(msj);
             generarAlerta(msj);
         }
-    });
+    };
 
     // get the tab object based on ID
     // console.log(tabs.getTab(triggerElId).targetEl.querySelector(".measure"));
@@ -113,7 +187,6 @@ const dashboard = () => {
 
    
      
-};
 
 export default dashboard;
 
