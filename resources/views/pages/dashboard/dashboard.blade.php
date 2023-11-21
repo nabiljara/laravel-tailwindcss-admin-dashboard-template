@@ -3,11 +3,6 @@
     {{-- @dd($topics) --}}
     <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
 
-
-        <button onclick="generarAlerta()" id="triggerElement" type="button"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Hide
-            alert</button>
-
         <!-- Alertas -->
         <div id="alerta"
             class="hidden flex items-center p-4 mb-4 text-red-800 border-t-4 border-red-300 bg-red-50 dark:text-red-400 dark:bg-gray-800 dark:border-red-800"
@@ -464,7 +459,7 @@
                             <svg class="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                 <path
-                                    d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                                d="M8 3.464V1.1m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175C15 15.4 15 16 14.462 16H1.538C1 16 1 15.4 1 14.807c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 8 3.464ZM4.54 16a3.48 3.48 0 0 0 6.92 0H4.54Z">
                             </svg>
                         </span>
                         <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
@@ -638,19 +633,45 @@
             },
             };
 
-            
+
             function cargarModal() {
                 // colocar header
                 const stationId = document.getElementById('tabs').querySelector('[aria-selected="true"]').id;
                 var headerModal = document.getElementById("crud-modal").querySelector("h3");
                 headerModal.innerHTML = "Crear notificación para " + stations[stationId]["name"];
 
-                //cargar select
-              /*  var selectModal = document.getElementById("crud-modal").querySelector("#underline_select");
-                Object.keys(stations[stationId]["topics"]).forEach(t => {
-                    console.log(key, obj[key]);
+                // ocultar todos 
+                var nodos = document.getElementById('topicos').querySelectorAll('[id^="div_"]');
+                nodos.forEach((item) => {
+                    if (!item.classList.contains("hidden")) {
+                        item.classList.toggle("hidden"); // toggle no funciona en chrome
+                        /*
+                        if (item.style.display == "block") {
+                            item.style.display = "none";
+                        } else {
+                            item.style.display = "block";
+                        }
+                        */
+                    }
+                });
 
-                });*/
+                var selectModal = document.getElementById("crud-modal").querySelector("#underline_select");
+
+                // vaciar select 
+                for (o in selectModal.options) { selectModal.options.remove(0); }
+
+                //cargar select
+                Object.keys(stations[stationId]["topics"]).forEach(t => {
+                    //console.log(key, obj[key]);
+                    var opt = document.createElement("option");
+
+                    opt.setAttribute('value', t);
+                    opt.setAttribute('onclick', 'opcionSeleccionada("'+ t +'")');
+                    opt.innerHTML = topicsAttr[t]['description']; // whatever property it has
+
+                    // then append it to the select element
+                    selectModal.appendChild(opt);
+                });
             }
 
             // MODAL SELECT
@@ -660,7 +681,14 @@
                 var nodos = document.getElementById('topicos').querySelectorAll('[id^="div_"]');
                 nodos.forEach((item) => {
                     if (!item.classList.contains("hidden")) {
-                        item.classList.toggle("hidden");
+                        item.classList.toggle("hidden"); // toggle no funciona en chrome
+                        /*
+                        if (item.style.display == "block") {
+                            item.style.display = "none";
+                        } else {
+                            item.style.display = "block";
+                        }
+                        */
                     }
                 });
 
@@ -669,10 +697,21 @@
                     item.value = "";
                 });
 
-                elemento.classList.toggle("hidden");
+                elemento.classList.toggle("hidden"); // toggle no funciona en chrome 
+                /*
+                if (elemento.style.display == "block") {
+                    elemento.style.display = "none";
+                } else {
+                    elemento.style.display = "block";
+                }
+                */
 
                 document.getElementById("topico_oculto").innerHTML = id;
             };
+
+            function vaciarSelectModal() {
+                
+            }
 
 
             // ALERTAS
@@ -684,7 +723,7 @@
                 alerta.classList.toggle("hidden");
 
                 setTimeout(function() {
-                    ocultarAlerta();
+                    ocultarElemento("alerta");
                 }, 10000);
             }
 
@@ -702,10 +741,10 @@
                     timing: "ease-out",
 
                     // callback functions
-                    onHide: (context, targetEl) => {
-                        console.log("element has been dismissed");
-                        console.log(targetEl);
-                    },
+                    //onHide: (context, targetEl) => {
+                    //    console.log("element has been dismissed");
+                    //    console.log(targetEl);
+                    //},
                 };
 
                 // instance options object
@@ -747,8 +786,6 @@
             const form = document.getElementById("formulario");
             form.addEventListener("submit", (event) => {
                 event.preventDefault()
-
-                //const client = connection();
 
                 //const stationName = dashboard.tabs.getActiveTab().targetEl.getAttribute('aria-labelledby');
                 const stationId = document.getElementById('tabs').querySelector('[aria-selected="true"]').id;
