@@ -76,7 +76,7 @@ const dashboard = () => {
     tabs.show(CSS.escape(buttons[0].id));
 
     const client = connection();
-    // const topic = "Alertas";
+    //const topic = "Alertas";
 
     const topics = [
         "Estación-123501-Sensor-525320/temp",
@@ -110,55 +110,50 @@ const dashboard = () => {
         "Estación-167442-Sensor-653139/dew_point",
         "Estación-167442-Sensor-650012/battery_voltage",
         "Estación-167442-Sensor-650019/bar_absolute",
+        "Alertas",
     ];
 
     topics.forEach((topic) => {
         client.subscribe(topic, () => {
             console.log(`Subscribed to topic '${topic}'`);
-            });
+        });
     });
 
     client.on("message", (topic, payload) => {
-        console.log(topic);
-        console.log(payload);
         if (!(topic == "Alertas")) {
-        const station_id = topic.split("-")[1];
-        const measure = topic.split("/").pop();
-        console.log(station_id);
-        console.log(measure);
-        
-        switch(measure){
-            case "temp": payload = ((parseFloat(payload) - 32)*5/9).toFixed(1);
-            break;
-            case "dew_point":payload = ((parseFloat(payload) - 32)*5/9).toFixed(1);
-            break;
-            case "wind_speed_last": payload = (parseFloat(payload) * 1.60934).toFixed(1); // Convertir millas/h a km/h
-            break;
-        }
+            const station_id = topic.split("-")[1];
+            const measure = topic.split("/").pop();
+/*
+            switch (measure) {
+                case "temp":
+                    payload = (((parseFloat(payload) - 32) * 5) / 9).toFixed(1);
+                    break;
+                case "dew_point":
+                    payload = (((parseFloat(payload) - 32) * 5) / 9).toFixed(1);
+                    break;
+                case "wind_speed_last":
+                    payload = (parseFloat(payload) * 1.60934).toFixed(1); // Convertir millas/h a km/h
+                    break;
+            }
+*/
+            triggerElId = CSS.escape(station_id);
 
-        triggerElId = CSS.escape(station_id);
-        console.log(triggerElId);
-
-        tabs
-            .getTab(triggerElId)
-            .targetEl.querySelector(`.${measure}`).textContent = payload;
+            tabs
+                .getTab(triggerElId)
+                .targetEl.querySelector(`.${measure}`).textContent = payload;
         } else {
-            
-            var str = new TextDecoder().decode(payload);
-            var obj = JSON.parse(str);
-            console.log(obj.data.temp);
-
-            // enviar valor que supera
-            //fecha = obj.data.timestamp.toLocaleString("es-ES");
+            var strValor = new TextDecoder().decode(payload);
+            var obj = JSON.parse(strValor);
+            var atributo = obj.topic.split("/")[1];
 
             var mensaje =
-                topicsAttr[obj.data.temp]["description"] +
+                topicsAttr[atributo]["description"] +
                 " actual de " +
-                valor +
-                topicsAttr[obj.data.temp]["unit"] +
+                obj.data +
+                topicsAttr[atributo]["unit"] +
                 " exedio el umbral aceptable.";
-            // var mensaje = topicsAttr[obj.data.temp]["description"] + ' supero el valor ' + valor + topicsAttr[obj.data.temp]["unit"];
 
+            console.log(mensaje);
             generarAlerta(mensaje);
         }
     });
@@ -170,7 +165,6 @@ const dashboard = () => {
 };
 
 export default dashboard;
-
 
 // Cielos del sur:
 

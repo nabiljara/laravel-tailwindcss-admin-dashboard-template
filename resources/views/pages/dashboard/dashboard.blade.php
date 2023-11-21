@@ -694,10 +694,10 @@
                     }
                 });
 
-            //     nodos = document.getElementById('topicos').querySelectorAll('input');
-            //     nodos.forEach((item) => {
-            //         item.value = "";
-            //     });
+                //     nodos = document.getElementById('topicos').querySelectorAll('input');
+                //     nodos.forEach((item) => {
+                //         item.value = "";
+                //     });
 
                 elemento.classList.toggle("hidden"); // toggle no funciona en chrome 
                 /*
@@ -711,76 +711,64 @@
                 document.getElementById("topico_oculto").innerHTML = id;
             };
 
-            function vaciarSelectModal() {
 
+
+            // ALERTAS
+            function generarAlerta(nuevoMensaje) {
+                mensajeAlerta = document.getElementById("mensaje_alerta");
+                mensajeAlerta.innerHTML = nuevoMensaje;
+
+                alerta = document.getElementById("alerta");
+                alerta.classList.toggle("hidden");
+
+                setTimeout(function() {
+                    ocultarElemento("alerta");
+                }, 10000);
             }
 
 
-            // // ALERTAS
-            // function generarAlerta(nuevoMensaje) {
-            //     mensajeAlerta = document.getElementById("mensaje_alerta");
-            //     mensajeAlerta.innerHTML = nuevoMensaje;
+            function ocultarElemento(idElemento) {
+                // target element that will be dismissed
+                const $targetEl = document.getElementById(idElemento);
 
-            //     alerta = document.getElementById("alerta");
-            //     alerta.classList.toggle("hidden");
+                // optional trigger element
+                const $triggerEl = document.getElementById("triggerElement");
 
-                // setTimeout(function() {
-                //     ocultarElemento("alerta");
-                // }, 10000);
-            
-
-            // function ocultarElemento(idElemento) {
-            //     // target element that will be dismissed
-            //     const $targetEl = document.getElementById(idElemento);
-
-            //     // optional trigger element
-            //     const $triggerEl = document.getElementById("triggerElement");
-
-            //     // options object
+                // options object
                 const optionsAlert = {
                     transition: "transition-opacity",
                     duration: 1000,
                     timing: "ease-out",
 
-                    // callback functions
-                    //onHide: (context, targetEl) => {
-                    //    console.log("element has been dismissed");
-                    //    console.log(targetEl);
-                    //},
+                    //callback functions
+                    onHide: (context, targetEl) => {
+                        console.log("element has been dismissed");
+                        console.log(targetEl);
+                    },
                 };
 
-            //     // instance options object
-            //     const instanceOptionsAlert = {
-            //         id: "targetElement",
-            //         override: true,
-            //     };
+                // instance options object
+                const instanceOptionsAlert = {
+                    id: "targetElement",
+                    override: true,
+                };
 
 
-            //     /*
-            //      * $targetEl (required)
-            //      * $triggerEl (optional)
-            //      * options (optional)
-            //      * instanceOptions (optional)
-            //      */
-            //     const dismiss = new Dismiss(
-            //         $targetEl,
-            //         $triggerEl,
-            //         optionsAlert,
-            //         instanceOptionsAlert
-            //     );
+                /*
+                 * $targetEl (required)
+                 * $triggerEl (optional)
+                 * options (optional)
+                 * instanceOptions (optional)
+                 */
+                const dismiss = new Dismiss(
+                    $targetEl,
+                    $triggerEl,
+                    optionsAlert,
+                    instanceOptionsAlert
+                );
 
-            //     // hide the target element
-                // dismiss.hide();
-            
-
-            function mostrarToast(idToast) {
-                console.log("mostrar toast")
-                tstNotificacion = document.getElementById(idToast);
-                tstNotificacion.classList.toggle("hidden");
-
-                setTimeout(function() {
-                    ocultarElemento(idToast);
-                }, 10000);
+                // hide the target element
+                dismiss.hide();
             }
 
             function mostrarToast(idToast) {
@@ -821,7 +809,8 @@
                     min: valorMin,
                     max: valorMax
                 };
-/*
+
+
                 // Realizar la solicitud POST con Axios
                 axios.post(apiUrl, requestData)
                     .then(response => {
@@ -831,7 +820,7 @@
                         console.error('Error en la solicitud:', error.response.data);
                     });
 
-                
+                /*
                                 axios.post(apiUrl, {
                                         JSON.stringify({
                                             station_id: stationId,
