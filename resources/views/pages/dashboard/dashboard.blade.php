@@ -511,191 +511,191 @@
         </div>
 
         <script>
-            // MODAL SELECT
-            function opcionSeleccionada(id) {
+            // // MODAL SELECT
+            // function opcionSeleccionada(id) {
 
-                var elemento = document.getElementById('div_' + id);
+            //     var elemento = document.getElementById('div_' + id);
 
-                var nodos = document.getElementById('topicos').querySelectorAll('[id^="div_"]');
-                nodos.forEach((item) => {
-                    if (!item.classList.contains("hidden")) {
-                        item.classList.toggle("hidden");
-                    }
-                });
+            //     var nodos = document.getElementById('topicos').querySelectorAll('[id^="div_"]');
+            //     nodos.forEach((item) => {
+            //         if (!item.classList.contains("hidden")) {
+            //             item.classList.toggle("hidden");
+            //         }
+            //     });
 
-                nodos = document.getElementById('topicos').querySelectorAll('input');
-                nodos.forEach((item) => {
-                    item.value = "";
-                });
+            //     nodos = document.getElementById('topicos').querySelectorAll('input');
+            //     nodos.forEach((item) => {
+            //         item.value = "";
+            //     });
 
-                elemento.classList.toggle("hidden");
-            };
-
-
-            // ALERTAS
-            function generarAlerta(nuevoMensaje) {
-                mensajeAlerta = document.getElementById("mensaje_alerta");
-                mensajeAlerta.innerHTML = nuevoMensaje;
-
-                alerta = document.getElementById("alerta");
-                alerta.classList.toggle("hidden");
-
-                setTimeout(function() {
-                    ocultarAlerta();
-                }, 10000);
-            }
-
-            function ocultarElemento(idElemento) {
-                // target element that will be dismissed
-                const $targetEl = document.getElementById(idElemento);
-
-                // optional trigger element
-                const $triggerEl = document.getElementById("triggerElement");
-
-                // options object
-                const optionsAlert = {
-                    transition: "transition-opacity",
-                    duration: 1000,
-                    timing: "ease-out",
-
-                    // callback functions
-                    onHide: (context, targetEl) => {
-                        console.log("element has been dismissed");
-                        console.log(targetEl);
-                    },
-                };
-
-                // instance options object
-                const instanceOptionsAlert = {
-                    id: "targetElement",
-                    override: true,
-                };
+            //     elemento.classList.toggle("hidden");
+            // };
 
 
-                /*
-                 * $targetEl (required)
-                 * $triggerEl (optional)
-                 * options (optional)
-                 * instanceOptions (optional)
-                 */
-                const dismiss = new Dismiss(
-                    $targetEl,
-                    $triggerEl,
-                    optionsAlert,
-                    instanceOptionsAlert
-                );
+            // // ALERTAS
+            // function generarAlerta(nuevoMensaje) {
+            //     mensajeAlerta = document.getElementById("mensaje_alerta");
+            //     mensajeAlerta.innerHTML = nuevoMensaje;
 
-                // hide the target element
-                dismiss.hide();
-            }
+            //     alerta = document.getElementById("alerta");
+            //     alerta.classList.toggle("hidden");
 
+            //     setTimeout(function() {
+            //         ocultarAlerta();
+            //     }, 10000);
+            // }
 
-            // FORM NOTIFICACIONES | REGLAS
-            const form = document.getElementById("formulario");
-            form.addEventListener("submit", (event) => {
-                        event.preventDefault()
+            // function ocultarElemento(idElemento) {
+            //     // target element that will be dismissed
+            //     const $targetEl = document.getElementById(idElemento);
 
-                        const client = connection();
+            //     // optional trigger element
+            //     const $triggerEl = document.getElementById("triggerElement");
 
-                        stationName = tabs.getActiveTab().targetEl.getAttribute('aria-labelledby');
+            //     // options object
+            //     const optionsAlert = {
+            //         transition: "transition-opacity",
+            //         duration: 1000,
+            //         timing: "ease-out",
 
-                        var query = "SELECT * FROM " + stationName + " WHERE"; // stationName
-                        var payload = '{"topic": " + stationName + ", "data": {'; // stationName
+            //         // callback functions
+            //         onHide: (context, targetEl) => {
+            //             console.log("element has been dismissed");
+            //             console.log(targetEl);
+            //         },
+            //     };
 
-                        ids = {
-                            'temperatura_max': ' payload.data.temp <=  ',
-                            'temperatura_min': ' payload.data.temp >= ',
-                            'viento,_max': ' payload.data.wind_speed_hi_last_2_min <= ',
-                            'viento_min': ' payload.data.wind_speed_hi_last_2_min >= ',
-                            'humedad_max': ' payload.data.hum <= ',
-                            'humedad_min': ' payload.data.hum >= ',
-                            'rocio_max': ' payload.data.dew_point <= ',
-                            'rocio_min': ' payload.data.dew_point >= '
-                        };
-
-                        atributos = {}; // setear
-
-                        var valor;
-                        var primero = true;
-                        var atributo;
-                        ids.forEach(function(id) {
-                            valor = document.getElementById(id);
-                            if (valor != '') {
-                                primero = false;
-                            };
-                            query += (primero ? 'AND' : '') + ids[id] + valor;
-
-                            atributo = id.slice(0, id.indexOf('_'));
-                            if (!atributos[artributo] && (document.getElementById(atributo + '_max') != '' ||
-                                    document
-                                    .getElementById(atributo + '_min'))) {
-                                atributos[artributo] = true;
-                                payload += ((ids[id].split('.'))[3]).slice(0, id.indexOf(' ')) + ': ' +
-                                    'DATO_ACTUAL'; // dato actual     
-                                // payload += '"temp": \${payload.data.temp}, ';
-                            }
-
-                        });
-
-                        query += ';';
-
-                        payload = payload.substring(0, payload.length - 2);
-                        payload += '}}';
+            //     // instance options object
+            //     const instanceOptionsAlert = {
+            //         id: "targetElement",
+            //         override: true,
+            //     };
 
 
-                        // Publica la regla
-                        const username = '0864e2a5beed02b6';
-                        const password = 'QHiMVaBAiortnOrw33hk0hHxLqlAwlt1zzb6hud0USJ';
+            //     /*
+            //      * $targetEl (required)
+            //      * $triggerEl (optional)
+            //      * options (optional)
+            //      * instanceOptions (optional)
+            //      */
+            //     const dismiss = new Dismiss(
+            //         $targetEl,
+            //         $triggerEl,
+            //         optionsAlert,
+            //         instanceOptionsAlert
+            //     );
 
-                        const apiUrl = new URL("http://150.230.80.1:18083/api/v5/rules");
-                        const basicAuth = 'Basic ' + btoa(`${username}:${password}`);
+            //     // hide the target element
+            //     dismiss.hide();
+            // }
 
-                        axios.post(apiUrl, {
-                                headers: {
-                                    "Content-Type": "application/json",
-                                    "Authorization": basicAuth // Auth
-                                },
-                                body: jsonEncode({
-                                        "name": "Rule-" + stationName + "-Alarm",
-                                        "sql": query,
-                                        "actions": [
-                                            "webhook:alarm",
-                                            {
-                                                "args": {
-                                                    "payload": payload,
-                                                    "topic": "Alertas",
-                                                    "qos": 2,
-                                                    "retain": "false"
-                                                },
-                                                "function": "republish",
-                                            },
-                                        ],
-                                        "enable": true,
-                                        "description": "Some description",
-                                        "metadata": {}
-                                    }
-                                })
-                            .then((response) =>
-                                console.log(response.data);
-                                if (response.statusCode == 201) {
-                                    mostrarToast("tst_alerta_si"):
-                                } else {
-                                    mostrarToast("tst_alerta_no");
-                                }
-                            )
-                            .then((error) => console.log(error); mostrarToast("tst_alerta_no"););
 
-                        });
+            // // FORM NOTIFICACIONES | REGLAS
+            // const form = document.getElementById("formulario");
+            // form.addEventListener("submit", (event) => {
+            //             event.preventDefault()
 
-                    function mostrarToast(idToast) {
-                        console.log("mostrar toast")
-                        tstNotificacion = document.getElementById(idToast);
-                        tstNotificacion.classList.toggle("hidden");
+            //             const client = connection();
 
-                        setTimeout(function() {
-                            ocultarElemento(idToast);
-                        }, 10000);
-                    }
+            //             stationName = tabs.getActiveTab().targetEl.getAttribute('aria-labelledby');
+
+            //             var query = "SELECT * FROM " + stationName + " WHERE"; // stationName
+            //             var payload = '{"topic": " + stationName + ", "data": {'; // stationName
+
+            //             ids = {
+            //                 'temperatura_max': ' payload.data.temp <=  ',
+            //                 'temperatura_min': ' payload.data.temp >= ',
+            //                 'viento,_max': ' payload.data.wind_speed_hi_last_2_min <= ',
+            //                 'viento_min': ' payload.data.wind_speed_hi_last_2_min >= ',
+            //                 'humedad_max': ' payload.data.hum <= ',
+            //                 'humedad_min': ' payload.data.hum >= ',
+            //                 'rocio_max': ' payload.data.dew_point <= ',
+            //                 'rocio_min': ' payload.data.dew_point >= '
+            //             };
+
+            //             atributos = {}; // setear
+
+            //             var valor;
+            //             var primero = true;
+            //             var atributo;
+            //             ids.forEach(function(id) {
+            //                 valor = document.getElementById(id);
+            //                 if (valor != '') {
+            //                     primero = false;
+            //                 };
+            //                 query += (primero ? 'AND' : '') + ids[id] + valor;
+
+            //                 atributo = id.slice(0, id.indexOf('_'));
+            //                 if (!atributos[artributo] && (document.getElementById(atributo + '_max') != '' ||
+            //                         document
+            //                         .getElementById(atributo + '_min'))) {
+            //                     atributos[artributo] = true;
+            //                     payload += ((ids[id].split('.'))[3]).slice(0, id.indexOf(' ')) + ': ' +
+            //                         'DATO_ACTUAL'; // dato actual     
+            //                     // payload += '"temp": \${payload.data.temp}, ';
+            //                 }
+
+            //             });
+
+            //             query += ';';
+
+            //             payload = payload.substring(0, payload.length - 2);
+            //             payload += '}}';
+
+
+            //             // Publica la regla
+            //             const username = '0864e2a5beed02b6';
+            //             const password = 'QHiMVaBAiortnOrw33hk0hHxLqlAwlt1zzb6hud0USJ';
+
+            //             const apiUrl = new URL("http://150.230.80.1:18083/api/v5/rules");
+            //             const basicAuth = 'Basic ' + btoa(`${username}:${password}`);
+
+            //             axios.post(apiUrl, {
+            //                     headers: {
+            //                         "Content-Type": "application/json",
+            //                         "Authorization": basicAuth // Auth
+            //                     },
+            //                     body: jsonEncode({
+            //                             "name": "Rule-" + stationName + "-Alarm",
+            //                             "sql": query,
+            //                             "actions": [
+            //                                 "webhook:alarm",
+            //                                 {
+            //                                     "args": {
+            //                                         "payload": payload,
+            //                                         "topic": "Alertas",
+            //                                         "qos": 2,
+            //                                         "retain": "false"
+            //                                     },
+            //                                     "function": "republish",
+            //                                 },
+            //                             ],
+            //                             "enable": true,
+            //                             "description": "Some description",
+            //                             "metadata": {}
+            //                         }
+            //                     })
+            //                 .then((response) =>
+            //                     console.log(response.data);
+            //                     if (response.statusCode == 201) {
+            //                         mostrarToast("tst_alerta_si"):
+            //                     } else {
+            //                         mostrarToast("tst_alerta_no");
+            //                     }
+            //                 )
+            //                 .then((error) => console.log(error); mostrarToast("tst_alerta_no"););
+
+            //             });
+
+            //         function mostrarToast(idToast) {
+            //             console.log("mostrar toast")
+            //             tstNotificacion = document.getElementById(idToast);
+            //             tstNotificacion.classList.toggle("hidden");
+
+            //             setTimeout(function() {
+            //                 ocultarElemento(idToast);
+            //             }, 10000);
+            //         }
         </script>
 
 </x-app-layout>

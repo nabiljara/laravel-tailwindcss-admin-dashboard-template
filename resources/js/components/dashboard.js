@@ -41,54 +41,63 @@ const dashboard = () => {
     tabs.show(CSS.escape(buttons[0].id));
 
     const client = connection();
-    // const topic = "Estación-123501-Sensor-525320/temp";
+    const topic = "Estación-123501-Sensor-525320/temp";
 
-    const topics = [
-        "Estación-123501-Sensor-525320/temp",
-        "Estación-123501-Sensor-525320/hum",
-        "Estación-123501-Sensor-525320/dew_point",
-        "Estación-123501-Sensor-464200/wind_speed_last",
-        "Estación-123501-Sensor-464200/wind_dir_last",
-        "Estación-123501-Sensor-464200/rain_storm_last_mm",
-        "Estación-123501-Sensor-462215/battery_voltage",
-        "Estación-123501-Sensor-462216/bar_absolute",
-        "Estación-138225-Sensor-525327/temp",
-        "Estación-138225-Sensor-525327/hum",
-        "Estación-138225-Sensor-525327/dew_point",
-        "Estación-138225-Sensor-525169/battery_voltage",
-        "Estación-138225-Sensor-525170/bar_absolute",
-        "Estación-145839-Sensor-653825/temp",
-        "Estación-145839-Sensor-653825/hum",
-        "Estación-145839-Sensor-653825/dew_point",
-        "Estación-145839-Sensor-653824/wind_speed_last",
-        "Estación-145839-Sensor-653824/wind_dir_last",
-        "Estación-145839-Sensor-653824/rain_storm_last_mm",
-        "Estación-145839-Sensor-653824/battery_voltage",
-        "Estación-145839-Sensor-557448/bar-absolute",
-        "Estación-145862-Sensor-558414/temp",
-        "Estación-145862-Sensor-558414/hum",
-        "Estación-145862-Sensor-558414/dew_point",
-        "Estación-145862-Sensor-557536/battery_voltage",
-        "Estación-145862-Sensor-557537/bar_absolute",
-        "Estación-167442-Sensor-653139/temp",
-        "Estación-167442-Sensor-653139/hum",
-        "Estación-167442-Sensor-653139/dew_point",
-        "Estación-167442-Sensor-650012/battery_voltage",
-        "Estación-167442-Sensor-650019/bar_absolute",
-    ];
+    // const topics = [
+    //     "Estación-123501-Sensor-525320/temp",
+    //     "Estación-123501-Sensor-525320/hum",
+    //     "Estación-123501-Sensor-525320/dew_point",
+    //     "Estación-123501-Sensor-464200/wind_speed_last",
+    //     "Estación-123501-Sensor-464200/wind_dir_last",
+    //     "Estación-123501-Sensor-464200/rain_storm_last_mm",
+    //     "Estación-123501-Sensor-462215/battery_voltage",
+    //     "Estación-123501-Sensor-462216/bar_absolute",
+    //     "Estación-138225-Sensor-525327/temp",
+    //     "Estación-138225-Sensor-525327/hum",
+    //     "Estación-138225-Sensor-525327/dew_point",
+    //     "Estación-138225-Sensor-525169/battery_voltage",
+    //     "Estación-138225-Sensor-525170/bar_absolute",
+    //     "Estación-145839-Sensor-653825/temp",
+    //     "Estación-145839-Sensor-653825/hum",
+    //     "Estación-145839-Sensor-653825/dew_point",
+    //     "Estación-145839-Sensor-653824/wind_speed_last",
+    //     "Estación-145839-Sensor-653824/wind_dir_last",
+    //     "Estación-145839-Sensor-653824/rain_storm_last_mm",
+    //     "Estación-145839-Sensor-653824/battery_voltage",
+    //     "Estación-145839-Sensor-557448/bar-absolute",
+    //     "Estación-145862-Sensor-558414/temp",
+    //     "Estación-145862-Sensor-558414/hum",
+    //     "Estación-145862-Sensor-558414/dew_point",
+    //     "Estación-145862-Sensor-557536/battery_voltage",
+    //     "Estación-145862-Sensor-557537/bar_absolute",
+    //     "Estación-167442-Sensor-653139/temp",
+    //     "Estación-167442-Sensor-653139/hum",
+    //     "Estación-167442-Sensor-653139/dew_point",
+    //     "Estación-167442-Sensor-650012/battery_voltage",
+    //     "Estación-167442-Sensor-650019/bar_absolute",
+    // ];
 
-    //topics.forEach((topic) => {
-    //    client.subscribe(topic, () => {
-    //        console.log(`Subscribed to topic '${topic}'`);
+    // topics.forEach((topic) => {
+       client.subscribe(topic, () => {
+           console.log(`Subscribed to topic '${topic}'`);
     // Aquí puedes realizar otras acciones una vez que te suscribas al tema
-    //    });
-    //});
+       });
+    // });
 
     client.on("message", (topic, payload) => {
         const station_id = topic.split("-")[1];
         const measure = topic.split("/").pop();
         console.log(station_id);
         console.log(measure);
+        
+        switch(measure){
+            case "temp": payload = ((parseFloat(payload) - 32)*5/9).toFixed(1);
+            break;
+            case "dew_point":payload = ((parseFloat(payload) - 32)*5/9).toFixed(1);
+            break;
+            case "":;
+            break;
+        }
 
         triggerElId = CSS.escape(station_id);
         console.log(triggerElId);
@@ -96,7 +105,53 @@ const dashboard = () => {
         tabs
             .getTab(triggerElId)
             .targetEl.querySelector(`.${measure}`).textContent = payload;
-    });
+        });
+
+    // client.on("message", async (topic, payload) => {
+    //     const station_id = topic.split("-")[1];
+    //     const measure = topic.split("/").pop();
+    //     console.log(station_id);
+    //     console.log(measure);
+    
+    //     triggerElId = CSS.escape(station_id);
+    //     console.log(triggerElId);
+    
+    //     tabs
+    //         .getTab(triggerElId)
+    //         .targetEl.querySelector(`.${measure}`).textContent = payload;
+    
+    //     const dataToSave = {
+    //         station_id,
+    //         measure,
+    //         payload:payload.body,
+    //         created_at: new Date().toLocaleString('en-US', { timeZone: 'America/Buenos_Aires' }), // Format the timestamp as per your requirement
+    //     };
+
+    //     const url = 'http://localhost:3000/apiv1/saveNotifications';
+    
+    //     fetch(url, {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(dataToSave)
+    //     })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             console.log('Respuesta del servidor:', data);
+    //         })
+    //         .catch(error => {
+    //             console.error('Error en la solicitud:', error);
+    //         });
+        // Save data to the API
+        // try {
+        //     const response = await axios.post('http://localhost:3000/apiv1/saveData', dataToSave);
+        //     console.log(response.data);
+        // } catch (error) {
+        //     console.error('Error saving data:', error);
+        // }
+    // });
+
     // get the tab object based on ID
     // console.log(tabs.getTab(triggerElId).targetEl.querySelector(".measure"));
     // tabs.getTab(triggerElId).targetEl.querySelector(".measure").textContent = "Hola"; //Forma de acceder al componente correctamente.
