@@ -6,11 +6,11 @@ const clientId = `pagina_web_clima`
 const connectUrl = `ws://150.230.80.1:8083/mqtt`
 const options = {
   clientId,
-  clean: false,
+  clean: true,
   connectTimeout: 4000,
   username: 'Nabil',
   password: '1234',
-  reconnectPeriod: 1000,
+  reconnectPeriod: 100000,
   keepalive: 0,
 }
 // const topic = "Estación-145839-Sensor-557448/bar-absolute";
