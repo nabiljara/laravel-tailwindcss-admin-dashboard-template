@@ -77,15 +77,15 @@ const dashboard = () => {
         "Estación-167442-Sensor-650019/bar_absolute",
     ];
 
-    // topics.forEach((topic) => {
+     topics.forEach((topic) => {
        client.subscribe(topic, () => {
            console.log(`Subscribed to topic '${topic}'`);
     // Aquí puedes realizar otras acciones una vez que te suscribas al tema
        });
-    // });
+     });
 
     client.on("message", (topic, payload) => {
-        if (!topic == "Alertas"){
+        // if (!topic == "Alertas"){
 
         const station_id = topic.split("-")[1];
         const measure = topic.split("/").pop();
@@ -97,22 +97,31 @@ const dashboard = () => {
             break;
             case "dew_point":payload = ((parseFloat(payload) - 32)*5/9).toFixed(1);
             break;
-            case "":;
+            case "wind_speed_last": payload = (parseFloat(payload) * 1.60934).toFixed(1); // Convertir millas/h a km/h
             break;
         }
+        const created_at = new Date().toISOString();
 
-        triggerElId = CSS.escape(station_id);
-        console.log(triggerElId);
+        const dataToSave = {
+          topic: topic,
+          payload: payload,
+          created_at: created_at,
+        };
+        const saveDataResponse = axios.post('http://localhost/apiv1/saveData', dataToSave);
 
-        tabs
-            .getTab(triggerElId)
-            .targetEl.querySelector(`.${measure}`).textContent = payload;
-        }else{
-            var msj = new TextDecoder().decode(payload);
-            console.log(msj);
-            generarAlerta(msj);
+        if (saveDataResponse.status === 200) {
+          console.log("Data saved successfully.");
+        } else {
+          console.error("Failed to save data.");
         }
-        });
+  
+    //   } else {
+    //     var msj = new TextDecoder().decode(payload);
+    //     console.log(msj);
+    //     generarAlerta(msj);
+    //   }
+    });
+
 
     // client.on("message", async (topic, payload) => {
     //     const station_id = topic.split("-")[1];
@@ -160,25 +169,25 @@ const dashboard = () => {
     // });
 
         
-        if (!topic == "Alertas"){
+    //     if (!topic == "Alertas"){
 
-            const station_id = topic.split("-")[1];
-            const measure = topic.split("/").pop();
-            //console.log(station_id);
-            //console.log(measure);
+    //         const station_id = topic.split("-")[1];
+    //         const measure = topic.split("/").pop();
+    //         //console.log(station_id);
+    //         //console.log(measure);
     
-            triggerElId = CSS.escape(station_id);
-            //console.log(triggerElId);
+    //         triggerElId = CSS.escape(station_id);
+    //         //console.log(triggerElId);
     
-            tabs
-                .getTab(triggerElId)
-                .targetEl.querySelector(`.${measure}`).textContent = payload;
-        }else{
-            var msj = new TextDecoder().decode(payload);
-            console.log(msj);
-            generarAlerta(msj);
-        }
-    };
+    //         tabs
+    //             .getTab(triggerElId)
+    //             .targetEl.querySelector(`.${measure}`).textContent = payload;
+    //     }else{
+    //         var msj = new TextDecoder().decode(payload);
+    //         console.log(msj);
+    //         generarAlerta(msj);
+    //     }
+    // };
 
     // get the tab object based on ID
     // console.log(tabs.getTab(triggerElId).targetEl.querySelector(".measure"));
@@ -187,8 +196,9 @@ const dashboard = () => {
 
    
      
-
+}
 export default dashboard;
+
 
 // Cielos del sur:
 
