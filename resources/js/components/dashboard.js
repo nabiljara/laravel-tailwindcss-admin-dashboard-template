@@ -100,7 +100,7 @@ const dashboard = () => {
                 .getTab(triggerElId)
                 .targetEl.querySelector(`.${measure}`).textContent = payload;
         }else{
-            console.log(payload.body);
+            console.log(payload.data.temp);
         }
     });
 

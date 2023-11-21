@@ -110,7 +110,7 @@
             <!-- Modal toggle -->
             <button data-modal-target="crud-modal" data-modal-toggle="crud-modal"
                 class="ms-auto block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                type="button">
+                type="button" onclick="cargarModal()">
                 Crear notificación
             </button>
 
@@ -545,49 +545,113 @@
         </div>
 
         <script>
-            const estaciones = {
+            const stations = {
                 123501: {
-                    "temp": 525320,
-                    "hum": 525320,
-                    "dew_point": 525320,
-                    "wind_speed_last": 464200,
-                    "rain_storm_last_mm": 464200,
-                    "battery_voltage": 462215,
-                    "bar_absolute": 462216
+                    "name": "Cielos del Sur", //
+                    "topics": {
+                        "temp": 525320,
+                        "hum": 525320,
+                        "dew_point": 525320,
+                        "wind_speed_last": 464200,
+                        "rain_storm_last_mm": 464200,
+                        "battery_voltage": 462215,
+                        "bar_absolute": 462216
+                    }
                 },
                 138225: {
-                    "temp": 525327,
-                    "hum": 525327,
-                    "dew_point": 525327,
-                    "battery_voltage": 525169,
-                    "bar_absolute": 525170
+                    "name": "Glyn", //
+                    "topics": {
+                        "temp": 525327,
+                        "hum": 525327,
+                        "dew_point": 525327,
+                        "battery_voltage": 525169,
+                        "bar_absolute": 525170
+                    }
                 },
                 145839: {
-                    "temp": 653825,
-                    "hum": 653825,
-                    "dew_point": 653825,
-                    "wind_speed_last": 653824,
-                    "wind_dir_last": 653824,
-                    "rain_storm_last_mm": 653824,
-                    "battery_voltage": 653824,
-                    "bar-absolute": 557448
+                    "name": "Villa Favaloro (Los Antiguos)",
+                    "topics": {
+                        "temp": 653825,
+                        "hum": 653825,
+                        "dew_point": 653825,
+                        "wind_speed_last": 653824,
+                        "wind_dir_last": 653824,
+                        "rain_storm_last_mm": 653824,
+                        "battery_voltage": 653824,
+                        "bar-absolute": 557448
+                    }
                 },
                 145862: {
-                    "temp": 558414,
-                    "hum": 558414,
-                    "dew_point": 558414,
-                    "battery_voltage": 557536,
-                    "bar_absolute": 557537
+                    "name": "Las Santinas VIRCH",
+                    "topics": {
+                        "temp": 558414,
+                        "hum": 558414,
+                        "dew_point": 558414,
+                        "battery_voltage": 557536,
+                        "bar_absolute": 557537
+                    }
                 },
                 167442: {
-                    "temp": 653139,
-                    "hum": 653139,
-                    "dew_point": 653139,
-                    "battery_voltage": 650012,
-                    "bar_absolute": 650019
+                    "name": "Glyn 3",
+                    "topics": {
+                        "temp": 653139,
+                        "hum": 653139,
+                        "dew_point": 653139,
+                        "battery_voltage": 650012,
+                        "bar_absolute": 650019
+                    }
                 }
             };
 
+            const topicsAttr = {
+            "temp": {
+                "description": "Temperatura",
+                "unit": "° C",
+            },
+            "hum": {
+                "description": "Humedad",
+                "unit": "%",
+            },
+            "dew_point": {
+                "description": "Punto de rocio",
+                "unit": "° C",
+            },
+            "wind_speed_last": {
+                "description": "Velocidad del viento",
+                "unit": "km/h",
+            },
+            "wind_dir_last": {
+                "description": "Dirección del viento",
+                "unit": "°",
+            },
+            "rain_storm_last_mm": {
+                "description": "Lluvia",
+                "unit": "mm",
+            },
+            "battery_voltage": {
+                "description": "Batería",
+                "unit": "%",
+            },
+            "bar_absolute": {
+                "description": "Presión",
+                "unit": "mbar",
+            },
+            };
+
+            
+            function cargarModal() {
+                // colocar header
+                const stationId = document.getElementById('tabs').querySelector('[aria-selected="true"]').id;
+                var headerModal = document.getElementById("crud-modal").querySelector("h3");
+                headerModal.innerHTML = "Crear notificación para " + stations[stationId]["name"];
+
+                //cargar select
+              /*  var selectModal = document.getElementById("crud-modal").querySelector("#underline_select");
+                Object.keys(stations[stationId]["topics"]).forEach(t => {
+                    console.log(key, obj[key]);
+
+                });*/
+            }
 
             // MODAL SELECT
             function opcionSeleccionada(id) {
@@ -687,14 +751,15 @@
                 //const client = connection();
 
                 //const stationName = dashboard.tabs.getActiveTab().targetEl.getAttribute('aria-labelledby');
-                const stationName = document.getElementById('tabs').querySelector('[aria-selected="true"]').id;
-
+                const stationId = document.getElementById('tabs').querySelector('[aria-selected="true"]').id;
+                var headerModal = document.getElementById("crud-modal").querySelector("h3");
+                headerModal.innerHTML = "Crear notificacion para " + stations[stationId]["name"];
 
                 //var payload = '{ topic : ' + stationName + ', data : {';
 
 
                 var topicoElegido = document.getElementById("topico_oculto").innerHTML;
-                var sensorEstacion = estaciones[stationName][topicoElegido];
+                var sensorEstacion = estaciones[stationId][topicoElegido];
 
                 console.log(topicoElegido);
                 var valorMin = document.getElementById(topicoElegido + "_min").value;
@@ -704,28 +769,28 @@
                 // Publica la regla
                 const apiUrl = new URL("http://localhost:3000/apiv1/createRule");
 
-               /*  axios.post(apiUrl, {
-                        JSON.stringify({
-                            station_name: stationName,
-                            sensor: sensorEstacion,
-                            topico: topicoElegido,
-                            min: valorMin,
-                            max: valorMax,
-                            dato_actual: datoActual
-                        });
-                    })
-                    .then((response) => {
-                        console.log(response.data);
-                        if (response.statusCode == 201) {
-                            mostrarToast("tst_alerta_si");
-                        } else {
-                            mostrarToast("tst_alerta_no");
-                        }
-                    })
-                    .then((error) => {
-                        console.log(error);
-                        mostrarToast("tst_alerta_no");
-                    }); */
+                /*  axios.post(apiUrl, {
+                         JSON.stringify({
+                             station_name: stationId,
+                             sensor: sensorEstacion,
+                             topico: topicoElegido,
+                             min: valorMin,
+                             max: valorMax,
+                             dato_actual: datoActual
+                         });
+                     })
+                     .then((response) => {
+                         console.log(response.data);
+                         if (response.statusCode == 201) {
+                             mostrarToast("tst_alerta_si");
+                         } else {
+                             mostrarToast("tst_alerta_no");
+                         }
+                     })
+                     .then((error) => {
+                         console.log(error);
+                         mostrarToast("tst_alerta_no");
+                     }); */
 
             });
         </script>
