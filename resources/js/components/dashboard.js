@@ -115,25 +115,33 @@ const dashboard = () => {
     topics.forEach((topic) => {
         client.subscribe(topic, () => {
             console.log(`Subscribed to topic '${topic}'`);
-            // Aquí puedes realizar otras acciones una vez que te suscribas al tema
-        });
+            });
     });
 
     client.on("message", (topic, payload) => {
         console.log(topic);
         console.log(payload);
-        if (!(topic === "Alertas")) {
-            const station_id = topic.split("-")[1];
-            const measure = topic.split("/").pop();
-            //console.log(station_id);
-            //console.log(measure);
+        if (!(topic == "Alertas")) {
+        const station_id = topic.split("-")[1];
+        const measure = topic.split("/").pop();
+        console.log(station_id);
+        console.log(measure);
+        
+        switch(measure){
+            case "temp": payload = ((parseFloat(payload) - 32)*5/9).toFixed(1);
+            break;
+            case "dew_point":payload = ((parseFloat(payload) - 32)*5/9).toFixed(1);
+            break;
+            case "":;
+            break;
+        }
 
-            triggerElId = CSS.escape(station_id);
-            //console.log(triggerElId);
+        triggerElId = CSS.escape(station_id);
+        console.log(triggerElId);
 
-            tabs
-                .getTab(triggerElId)
-                .targetEl.querySelector(`.${measure}`).textContent = payload;
+        tabs
+            .getTab(triggerElId)
+            .targetEl.querySelector(`.${measure}`).textContent = payload;
         } else {
             
             var str = new TextDecoder().decode(payload);
