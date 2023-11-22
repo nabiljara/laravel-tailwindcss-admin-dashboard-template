@@ -55,7 +55,7 @@ const connection = () => {
     ];
 
     topics.forEach((topic) => {
-        client.subscribe(topic,{ qos: 0, retain: true }, () => {
+        client.subscribe(topic,{ qos: 2, retain: true }, () => {
             console.log(`Subscribed to topic '${topic}'`);
         });
     });

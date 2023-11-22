@@ -15,7 +15,7 @@ class MapController extends Controller
      */
     public function map()
     {
-        $topics = ['Temperatura' => 'temp', 'Humedad' => 'hum','Viento'=> 'wind_speed_last' , 'Lluvia' =>'rain_storm_last_mm' ];
+        $topics = ['Temperatura' => 'temp', 'Humedad' => 'hum','Viento'=> 'wind' , 'Lluvia' =>'rain' ];
         return view('pages/map/map',compact('topics'));
     }
 }

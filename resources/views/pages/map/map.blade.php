@@ -206,137 +206,6 @@
         }
     </style>
     <div id="map"></div>
-    <script>
-        async function initMap() {
-            // Request needed libraries.
-            const {
-                Map
-            } = await google.maps.importLibrary("maps");
-            const {
-                AdvancedMarkerElement
-            } = await google.maps.importLibrary("marker");
-            const center = {
-                lat: -43.815053,
-                lng: -67.819730
-            };
-            const map = new Map(document.getElementById("map"), {
-                zoom: 7,
-                center,
-                mapId: "4504f8b37365c3d0",
-            });
-            var properties = [];
-            (async () => {
-                try {
-                    const responseA = await fetch('/json-key-feed');
-                    const result = await responseA.json();
-
-                    const url = 'http://localhost:3000/apiv1/estaciones';
-                    const data = {
-                        api_key: result.api_key,
-                        x_api_secret: result.x_api_secret
-                    };
-
-                    const responseB = await fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    });
-
-                    const responseData = await responseB.json();
-                    const stations = responseData.stations;
-                    // console.log(stations);
-                    stations.forEach(function(station) {
-                        properties.push({
-                            address: station.city + ", " + station.country,
-                            description: station.station_name,
-                            name: station.station_name,
-                            type: "house-signal",
-                            temp: "-",
-                            wind: "-",
-                            hum: "-",
-                            rain: "-",
-                            position: {
-                                lat: station.latitude,
-                                lng: station.longitude,
-                            },
-                        });
-                    });
-                    // console.log(properties);
-                    for (const property of properties) {
-                        const AdvancedMarkerElement = new google.maps.marker.AdvancedMarkerElement({
-                            map,
-                            content: buildContent(property),
-                            position: property.position,
-                            title: property.description,
-                        });
-
-                        AdvancedMarkerElement.addListener("click", () => {
-                            toggleHighlight(AdvancedMarkerElement, property);
-                        });
-                    }
-                } catch (error) {
-                    console.error('Error en la solicitud:', error);
-                }
-            })();
-        }
-
-        function toggleHighlight(markerView, property) {
-            if (markerView.content.classList.contains("highlight")) {
-                markerView.content.classList.remove("highlight");
-                markerView.zIndex = null;
-            } else {
-                markerView.content.classList.add("highlight");
-                markerView.zIndex = 1;
-            }
-        }
-
-        function buildContent(property) {
-            const content = document.createElement("div");
-
-            content.classList.add("property");
-            content.innerHTML = `
-    <div class="icon">
-        <i aria-hidden="true" class="fa fa-icon fa-${property.type} house" title="${property.type}"></i>
-        <span class="fa-sr-only">${property.type}</span>
-    </div>
-    <div class="details">
-        <div class="name">${property.name}</div>
-        <div class="address">${property.address}</div>
-        <div class="features">
-        <div>
-            <i aria-hidden="true" class="fa-solid fa-temperature-low fa-lg temp" title="Temperatura"></i>
-            <span class="fa-sr-only">Temperatura</span>
-            <span class="{{ $topics['Temperatura'] }}">${property.temp}</span><span>°C</span>
-        </div>
-        <div>
-            <i aria-hidden="true" class="fa fa-wind fa-lg wind" title="Viento"></i>
-            <span class="fa-sr-only">Viento</span>
-            <span class"{{ $topics['Viento'] }}">${property.wind}</span><span>Km/h</span>
-        </div>
-        <div>
-            <i aria-hidden="true" class="fa fa-cloud fa-lg hum" title="Humedad"></i>
-            <span class="fa-sr-only">Humedad</span>
-            <span class="{{ $topics['Humedad'] }}">${property.hum}</span><span> %</span>
-        </div>
-        <div>
-            <i aria-hidden="true" class="fa-solid fa-cloud-showers-heavy fa-lg rain" title="Lluvia"></i>
-            <span class="fa-sr-only">Lluvia</span>
-            <span class="{{ $topics['Lluvia'] }}">${property.rain}</span><span> mm</span>
-        </div>
-        </div>
-    </div>
-    `;
-            return content;
-        }
-    </script>
-    <!-- prettier-ignore -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPS_GOOGLE_MAPS_ACCESS_TOKEN') }}&callback=initMap"></script>
-    <script async defer src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script async defer src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
-
-
     <!-- Nav -->
     <div
         class="fixed z-50 w-full h-16 max-w-md -translate-x-1/2 bg-white border border-gray-200 rounded-full bottom-4 left-1/2 dark:bg-gray-700 dark:border-gray-600">
@@ -394,10 +263,193 @@
             </div>
         </div>
     </div>
+    <script>
+        async function initMap() {
+            // Request needed libraries.
+            const {
+                Map
+            } = await google.maps.importLibrary("maps");
+            const {
+                AdvancedMarkerElement
+            } = await google.maps.importLibrary("marker");
+            const center = {
+                lat: -43.815053,
+                lng: -67.819730
+            };
+            const map = new Map(document.getElementById("map"), {
+                zoom: 7,
+                center,
+                mapId: "4504f8b37365c3d0",
+            });
+            var properties = [];
+            (async () => {
+                try {
+                    const responseA = await fetch('/json-key-feed');
+                    const result = await responseA.json();
 
+                    const url = 'http://localhost:3000/apiv1/estaciones';
+                    const data = {
+                        api_key: result.api_key,
+                        x_api_secret: result.x_api_secret
+                    };
 
+                    const responseB = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    const responseData = await responseB.json();
+                    const stations = responseData.stations;
+                    // console.log(stations);
+                    stations.forEach(function(station) {
+                        properties.push({
+                            address: station.city + ", " + station.country,
+                            description: station.station_name,
+                            name: station.station_name,
+                            id: station.station_id,
+                            type: "house-signal",
+                            temp: "-",
+                            wind: "-",
+                            hum: "-",
+                            rain: "-",
+                            position: {
+                                lat: station.latitude,
+                                lng: station.longitude,
+                            },
+                        });
+                    });
+                    // console.log(properties);
+                    for (const property of properties) {
+                        const AdvancedMarkerElement = new google.maps.marker.AdvancedMarkerElement({
+                            map,
+                            content: buildContent(property),
+                            position: property.position,
+                            title: property.description,
+                        });
+
+                        AdvancedMarkerElement.addListener("click", () => {
+                            toggleHighlight(AdvancedMarkerElement, property);
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error en la solicitud:', error);
+                }
+            })();
+        }
+
+        function toggleHighlight(markerView, property) {
+            if (markerView.content.classList.contains("highlight")) {
+                markerView.content.classList.remove("highlight");
+                markerView.zIndex = null;
+            } else {
+                markerView.content.classList.add("highlight");
+                markerView.zIndex = 1;
+            }
+        }
+
+        function buildContent(property) {
+            const content = document.createElement("div");
+
+            content.classList.add("property");
+            content.innerHTML = `
+    <div class="icon">
+        <i aria-hidden="true" class="fa fa-icon fa-${property.type} house" title="${property.type}"></i>
+        <span class="fa-sr-only">${property.type}</span>
+    </div>
+    <div class="details">
+        <div class="name">${property.name}</div>
+        <div class="address">${property.address}</div>
+        <div id="${property.id}" class="features">
+        <div>
+            <i aria-hidden="true" class="fa-solid fa-temperature-low fa-lg temp" title="Temperatura"></i>
+            <span class="fa-sr-only">Temperatura</span>
+            <span class="{{ $topics['Temperatura'] }}">${property.temp}</span><span>°C</span>
+        </div>
+        <div>
+            <i aria-hidden="true" class="fa fa-cloud fa-lg hum" title="Humedad"></i>
+            <span class="fa-sr-only">Humedad</span>
+            <span class="{{ $topics['Humedad'] }}">${property.hum}</span><span> %</span>
+        </div>
+        <div>
+            <i aria-hidden="true" class="fa fa-wind fa-lg wind" title="Viento"></i>
+            <span class="fa-sr-only">Viento</span>
+            <span class= "{{ $topics['Viento'] }}">${property.wind}</span><span>Km/h</span>
+        </div>
+        <div>
+            <i aria-hidden="true" class="fa-solid fa-cloud-showers-heavy fa-lg rain" title="Lluvia"></i>
+            <span class="fa-sr-only">Lluvia</span>
+            <span class= "{{ $topics['Lluvia'] }}">${property.rain}</span><span> mm</span>
+        </div>
+        </div>
+    </div>
+    `;
+            return content;
+        }
+    </script>
+    <!-- prettier-ignore -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPS_GOOGLE_MAPS_ACCESS_TOKEN') }}&callback=initMap"></script>
+    <script async defer src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script async defer src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
+    <script async defer>
+        const clientId = `mapa_clima`;
+        const connectUrl = `ws://150.230.80.1:8083/mqtt`;
+        const options = {
+            clientId,
+            clean: false,
+            connectTimeout: 4000,
+            username: "Nabil",
+            password: "1234",
+            reconnectPeriod: 100000,
+            keepalive: 0,
+        };
+        // const topic = "Estación-145839-Sensor-557448/bar-absolute";
+        const client = mqtt.connect(connectUrl, options);
+        client.on("connect", () => {
+            console.log("Connected!");
+        });
+
+        const topics = [
+            "Estación-123501-Sensor-525320/temp",
+            "Estación-123501-Sensor-525320/hum",
+            "Estación-123501-Sensor-464200/wind_speed_last",
+            "Estación-123501-Sensor-464200/rain_storm_last_mm",
+            "Estación-138225-Sensor-525327/temp",
+            "Estación-138225-Sensor-525327/hum",
+            "Estación-145839-Sensor-653825/temp",
+            "Estación-145839-Sensor-653825/hum",
+            "Estación-145839-Sensor-653824/wind_speed_last",
+            "Estación-145839-Sensor-653824/rain_storm_last_mm",
+            "Estación-145862-Sensor-558414/temp",
+            "Estación-145862-Sensor-558414/hum",
+            "Estación-167442-Sensor-653139/temp",
+            "Estación-167442-Sensor-653139/hum",
+        ];
+
+        topics.forEach((topic) => {
+            client.subscribe(topic, { qos: 2, retain: true }, () => {
+                console.log(`Subscribed to topic '${topic}'`);
+            });
+        });
+
+        client.on('message', (topic, payload) => {
+            if (!(topic == "Alertas")) {
+                // console.log(payload);
+                const station_id = topic.split("-")[1];
+                const measure = topic.split("/").pop().split("_")[0];
+                // console.log(measure);
+                const element =  document.getElementById(station_id);
+                // console.log(element);
+                // console.log(element.getElementsByClassName(`${measure}`)[1]);
+
+                element.getElementsByClassName(`${measure}`)[1].textContent = payload;
+            }
+        });
+        // tabs.getTab(triggerElId).targetEl.querySelector(`.${measure}`).textContent = payload;
+    </script>
 </x-app-layout>
-
 
 {{-- <script>
   fetch('/json-key-feed')
