@@ -751,7 +751,7 @@ class="fixed z-50 w-full h-16 max-w-md -translate-x-1/2 bg-white border border-g
                 alerta.classList.toggle("hidden");
 
                 setTimeout(function() {
-                    //ocultarElemento("alerta");
+                    // ocultarElemento("alerta");
                     alerta.classList.toggle("hidden");
                 }, 10000);
 
@@ -862,74 +862,87 @@ class="fixed z-50 w-full h-16 max-w-md -translate-x-1/2 bg-white border border-g
                 tstNotificacion.classList.toggle("hidden");
 
                 setTimeout(function() {
-                    ocultarElemento(idToast);
+                    alerta.classList.toggle("hidden");
                 }, 10000);
             }
-
 
             // FORM NOTIFICACIONES | REGLAS
             const form = document.getElementById("formulario");
             form.addEventListener("submit", (event) => {
-                event.preventDefault()
+            event.preventDefault()
 
-                const stationId = document.getElementById('tabs').querySelector('[aria-selected="true"]').id;
-                var headerModal = document.getElementById("crud-modal").querySelector("h3");
-                headerModal.innerHTML = "Crear notificacion para " + stations[stationId]["name"];
+            const stationId = document.getElementById('tabs').querySelector('[aria-selected="true"]').id;
+            
+            var headerModal = document.getElementById("crud-modal").querySelector("h3");
+            headerModal.innerHTML = "Crear notificacion para " + stations[stationId]["name"];
 
-                var topicoElegido = document.getElementById("topico_oculto").innerHTML;
-                var sensorEstacion = stations[stationId][topicoElegido];
+            var topicoElegido = document.getElementById("topico_oculto").innerHTML;
+            var sensorEstacion = stations[stationId]["topics"][topicoElegido];
 
-                console.log(topicoElegido);
-                var valorMin = document.getElementById(topicoElegido + "_min").value;
-                var valorMax = document.getElementById(topicoElegido + "_max").value;
+            var valorMin = document.getElementById(topicoElegido + "_min").value;
+            var valorMax = document.getElementById(topicoElegido + "_max").value;
 
-                // Publica la regla
-                const apiUrl = new URL("http://localhost:3000/apiv1/createRule");
+            // Publica la regla
+            const apiUrl = new URL("http://localhost:3000/apiv1/createRule");
 
-                // Objeto con los datos a enviar en el cuerpo de la solicitud
-                const requestData = {
-                    station_id: stationId,
-                    sensor: sensorEstacion,
-                    atributo: topicoElegido,
-                    min: valorMin,
-                    max: valorMax
-                };
-
-                /*
-
-                                // Realizar la solicitud POST con Axios
-                                axios.post(apiUrl, requestData)
-                                    .then(response => {
-                                        console.log('Respuesta del servidor:', response.data);
-                                    })
-                                    .catch(error => {
-                                        console.error('Error en la solicitud:', error.response.data);
-                                    });
-
-                                
-                                                axios.post(apiUrl, {
-                                                        JSON.stringify({
-                                                            station_id: stationId,
-                                                            sensor: sensorEstacion,
-                                                            atributo: topicoElegido,
-                                                            min: valorMin,
-                                                            max: valorMax
-                                                        })
-                                                    })
-                                                    .then((response) => {
-                                                        console.log(response.data);
-                                                        if (response.statusCode == 201) {
-                                                            mostrarToast("tst_alerta_si");
-                                                        } else {
-                                                            mostrarToast("tst_alerta_no");
-                                                        }
-                                                    })
-                                                    .then((error) => {
-                                                        console.log(error);
-                                                        mostrarToast("tst_alerta_no");
-                                                    });
-                                */
+            // Objeto con los datos a enviar en el cuerpo de la solicitud
+            const requestData = {
+                station_id: stationId,
+                sensor: sensorEstacion,
+                atributo: topicoElegido,
+                min: valorMin,
+                max: valorMax
+            };
+            fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    mostrarToast("tst_alerta_si");
+                    console.log(data);
+                })
+                .catch(error => {
+                    mostrarToast("tst_alerta_no");
+                    console.error('Error en la solicitud:', error);
+                });
             });
+
+            /*
+                // Realizar la solicitud POST con Axios
+                axios.post(apiUrl, requestData)
+                    .then(response => {
+                        console.log('Respuesta del servidor:', response.data);
+                    })
+                    .catch(error => {
+                        console.error('Error en la solicitud:', error.response.data);
+                    });
+
+                                axios.post(apiUrl, {
+                                        JSON.stringify({
+                                            station_id: stationId,
+                                            sensor: sensorEstacion,
+                                            atributo: topicoElegido,
+                                            min: valorMin,
+                                            max: valorMax
+                                        })
+                                    })
+                                    .then((response) => {
+                                        console.log(response.data);
+                                        if (response.statusCode == 201) {
+                                            mostrarToast("tst_alerta_si");
+                                        } else {
+                                            mostrarToast("tst_alerta_no");
+                                        }
+                                    })
+                                    .then((error) => {
+                                        console.log(error);
+                                        mostrarToast("tst_alerta_no");
+                                    });
+                */
         </script>
 
 </x-app-layout>
