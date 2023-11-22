@@ -48,7 +48,7 @@
         <!-- Page wrapper -->
         <div class="flex h-screen overflow-hidden">
 
-            <x-app.sidebar />
+            {{-- <x-app.sidebar /> --}}
 
             <!-- Content area -->
             <div class="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden @if($attributes['background']){{ $attributes['background'] }}@endif" x-ref="contentarea">

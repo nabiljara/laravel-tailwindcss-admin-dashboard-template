@@ -30,9 +30,9 @@
         x-transition:leave-end="opacity-0"
         x-cloak                    
     >
-        <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase pt-1.5 pb-2 px-4">Notifications</div>
-        <ul>
-            <li class="border-b border-slate-200 dark:border-slate-700 last:border-0">
+        <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase pt-1.5 pb-2 px-4">Notificaciones</div>
+        <ul id="lista_notif">
+            {{-- <li class="border-b border-slate-200 dark:border-slate-700 last:border-0">
                 <a class="block py-2 px-4 hover:bg-slate-50 dark:hover:bg-slate-700/20" href="#0" @click="open = false" @focus="open = true" @focusout="open = false">
                     <span class="block text-sm mb-2">📣 <span class="font-medium text-slate-800 dark:text-slate-100">Edit your information in a swipe</span> Sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</span>
                     <span class="block text-xs font-medium text-slate-400 dark:text-slate-500">Feb 12, 2021</span>
@@ -46,10 +46,10 @@
             </li>
             <li class="border-b border-slate-200 dark:border-slate-700 last:border-0">
                 <a class="block py-2 px-4 hover:bg-slate-50 dark:hover:bg-slate-700/20" href="#0" @click="open = false" @focus="open = true" @focusout="open = false">
-                    <span class="block text-sm mb-2">🚀<span class="font-medium text-slate-800 dark:text-slate-100">Say goodbye to paper receipts!</span> Sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</span>
-                    <span class="block text-xs font-medium text-slate-400 dark:text-slate-500">Jan 24, 2020</span>
+                    <span class="block text-sm mb-2"><span class="font-medium text-slate-800 dark:text-slate-100">ICONO ATRIBUTO</span> MENSAJE</span>
+                    <span class="block text-xs font-medium text-slate-400 dark:text-slate-500">GET FECHA</span>
                 </a>
-            </li>
+            </li> --}}
         </ul>                
     </div>
 </div>
