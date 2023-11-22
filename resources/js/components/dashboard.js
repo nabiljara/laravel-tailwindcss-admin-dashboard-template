@@ -165,27 +165,36 @@ const dashboard = () => {
             var atributo = obj.topic.split("/")[1];
 
             var fecha = new Date(obj.timestamp);
-            const options = {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-                second: "numeric",
-            };
-            var fechaStr = fecha.toLocaleString("es-ES", options);
+            var titulo = topicsAttr[atributo]["description"];
+            var actual = obj.data;
+            var minimo = obj.min;
+            var maximo = obj.max;
+            var unidad = topicsAttr[atributo]["unit"];
+            var cuerpo;
 
-            var mensaje =
-                topicsAttr[atributo]["description"] +
-                " actual de " +
-                obj.data +
-                topicsAttr[atributo]["unit"] +
-                " exedio el umbral aceptable en " +
-                stations[id]["name"] +
-                " el " +
-                fechaStr;
+            if (actual > maximo) {
+                cuerpo =
+                    " actual de " +
+                    actual +
+                    unidad +
+                    " exedio el maximo " +
+                    maximo +
+                    unidad +
+                    " en " +
+                    stations[id]["name"];
+            } else {
+                cuerpo =
+                    " actual de " +
+                    actual +
+                    unidad +
+                    " es inferior al minimo " +
+                    minimo +
+                    unidad +
+                    " en " +
+                    stations[id]["name"];
+            }
 
-            generarAlerta(mensaje);
+            generarAlerta(titulo, cuerpo, fecha);
         }
     });
 
