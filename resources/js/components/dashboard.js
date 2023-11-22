@@ -185,7 +185,7 @@ const dashboard = () => {
                 " el " +
                 fechaStr;
 
-                generarAlerta(mensaje);
+            generarAlerta(mensaje);
         }
     });
 

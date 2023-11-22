@@ -794,7 +794,12 @@ class="fixed z-50 w-full h-16 max-w-md -translate-x-1/2 bg-white border border-g
                     minute: "numeric",
                     second: "numeric"
                 };
-                spanFecha.innerHTML = fecha.toLocaleString('es-ES', options)
+                //spanFecha.innerHTML = fecha.toLocaleString('es-ES', options)
+
+                // Temperatura actual de 50° C exedio el umbral aceptable en Cielos del Sur el 22 de noviembre de 2023, 10:13:57
+                // el 13
+
+
 
                 spanExtTexto.innerHTML = '<span class="font-medium text-slate-800 dark:text-slate-100">' + titulo + '</span> ' +
                     cuerpo;
