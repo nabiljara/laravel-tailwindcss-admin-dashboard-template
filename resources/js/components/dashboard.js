@@ -3,41 +3,6 @@ import connection from "./connection.js";
 import axios from "axios";
 
 const dashboard = () => {
-    const topicsAttr = {
-        temp: {
-            description: "Temperatura",
-            unit: "° C",
-        },
-        hum: {
-            description: "Humedad",
-            unit: "%",
-        },
-        dew_point: {
-            description: "Punto de rocio",
-            unit: "° C",
-        },
-        wind_speed_last: {
-            description: "Velocidad del viento",
-            unit: "km/h",
-        },
-        wind_dir_last: {
-            description: "Dirección del viento",
-            unit: "°",
-        },
-        rain_storm_last_mm: {
-            description: "Lluvia",
-            unit: "mm",
-        },
-        battery_voltage: {
-            description: "Batería",
-            unit: "%",
-        },
-        bar_absolute: {
-            description: "Presión",
-            unit: "mbar",
-        },
-    };
-
     const tabsElement = document.getElementById("tabs");
     const tabElements = [];
     const buttons = document.querySelectorAll("button.station");
@@ -119,6 +84,99 @@ const dashboard = () => {
         });
     });
 
+    const stations = {
+        123501: {
+            "name": "Cielos del Sur", //
+            "topics": {
+                "temp": 525320,
+                "hum": 525320,
+                "dew_point": 525320,
+                "wind_speed_last": 464200,
+                "rain_storm_last_mm": 464200,
+                "battery_voltage": 462215,
+                "bar_absolute": 462216
+            }
+        },
+        138225: {
+            "name": "Glyn", //
+            "topics": {
+                "temp": 525327,
+                "hum": 525327,
+                "dew_point": 525327,
+                "battery_voltage": 525169,
+                "bar_absolute": 525170
+            }
+        },
+        145839: {
+            "name": "Villa Favaloro (Los Antiguos)",
+            "topics": {
+                "temp": 653825,
+                "hum": 653825,
+                "dew_point": 653825,
+                "wind_speed_last": 653824,
+                "wind_dir_last": 653824,
+                "rain_storm_last_mm": 653824,
+                "battery_voltage": 653824,
+                "bar-absolute": 557448
+            }
+        },
+        145862: {
+            "name": "Las Santinas VIRCH",
+            "topics": {
+                "temp": 558414,
+                "hum": 558414,
+                "dew_point": 558414,
+                "battery_voltage": 557536,
+                "bar_absolute": 557537
+            }
+        },
+        167442: {
+            "name": "Glyn 3",
+            "topics": {
+                "temp": 653139,
+                "hum": 653139,
+                "dew_point": 653139,
+                "battery_voltage": 650012,
+                "bar_absolute": 650019
+            }
+        }
+    };
+
+    const topicsAttr = {
+        "temp": {
+            "description": "Temperatura",
+            "unit": "° C",
+        },
+        "hum": {
+            "description": "Humedad",
+            "unit": "%",
+        },
+        "dew_point": {
+            "description": "Punto de rocio",
+            "unit": "° C",
+        },
+        "wind_speed_last": {
+            "description": "Velocidad del viento",
+            "unit": "km/h",
+        },
+        "wind_dir_last": {
+            "description": "Dirección del viento",
+            "unit": "°",
+        },
+        "rain_storm_last_mm": {
+            "description": "Lluvia",
+            "unit": "mm",
+        },
+        "battery_voltage": {
+            "description": "Batería",
+            "unit": "%",
+        },
+        "bar_absolute": {
+            "description": "Presión",
+            "unit": "mbar",
+        },
+    };
+
     client.on("message", (topic, payload) => {
         if (!(topic == "Alertas")) {
             const station_id = topic.split("-")[1];
@@ -144,6 +202,7 @@ const dashboard = () => {
         } else {
             var strValor = new TextDecoder().decode(payload);
             var obj = JSON.parse(strValor);
+            var id = obj.topic.split("-")[1];
             var atributo = obj.topic.split("/")[1];
 
             var mensaje =
@@ -151,7 +210,8 @@ const dashboard = () => {
                 " actual de " +
                 obj.data +
                 topicsAttr[atributo]["unit"] +
-                " exedio el umbral aceptable.";
+                " exedio el umbral aceptable en " +
+                stations[id]["name"];
 
             console.log(mensaje);
             generarAlerta(mensaje);

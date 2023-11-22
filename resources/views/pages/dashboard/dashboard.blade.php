@@ -5,16 +5,16 @@
 
         <!-- Alertas -->
         <div id="alerta"
-            class="hidden flex items-center p-4 mb-4 text-red-800 border-t-4 border-red-300 bg-red-50 dark:text-red-400 dark:bg-gray-800 dark:border-red-800"
+            class="hidden flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
             role="alert">
-            <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                viewBox="0 0 20 20">
+            <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor" viewBox="0 0 20 20">
                 <path
-                    d="M18.012 13.453c-.219-1.173-2.163-1.416-2.6-3.76l-.041-.217c0 .006 0-.005-.007-.038v.021l-.017-.09-.005-.025v-.006l-.265-1.418a5.406 5.406 0 0 0-5.051-4.408.973.973 0 0 0 0-.108L9.6 1.082a1 1 0 0 0-1.967.367l.434 2.325a.863.863 0 0 0 .039.1A5.409 5.409 0 0 0 4.992 9.81l.266 1.418c0-.012 0 0 .007.037v-.007l.006.032.009.046v-.01l.007.038.04.215c.439 2.345-1.286 3.275-1.067 4.447.11.586.22 1.173.749 1.074l12.7-2.377c.523-.098.413-.684.303-1.27ZM1.917 9.191h-.074a1 1 0 0 1-.924-1.07 9.446 9.446 0 0 1 2.426-5.648 1 1 0 1 1 1.482 1.343 7.466 7.466 0 0 0-1.914 4.449 1 1 0 0 1-.996.926Zm5.339 8.545A3.438 3.438 0 0 0 10 19.1a3.478 3.478 0 0 0 3.334-2.5l-6.078 1.136Z" />
+                    d="M15.133 10.632v-1.8a5.407 5.407 0 0 0-4.154-5.262.955.955 0 0 0 .021-.106V1.1a1 1 0 0 0-2 0v2.364a.944.944 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C4.867 13.018 3 13.614 3 14.807 3 15.4 3 16 3.538 16h12.924C17 16 17 15.4 17 14.807c0-1.193-1.867-1.789-1.867-4.175Zm-13.267-.8a1 1 0 0 1-1-1 9.424 9.424 0 0 1 2.517-6.39A1.001 1.001 0 1 1 4.854 3.8a7.431 7.431 0 0 0-1.988 5.037 1 1 0 0 1-1 .995Zm16.268 0a1 1 0 0 1-1-1A7.431 7.431 0 0 0 15.146 3.8a1 1 0 0 1 1.471-1.354 9.425 9.425 0 0 1 2.517 6.391 1 1 0 0 1-1 .995ZM6.823 17a3.453 3.453 0 0 0 6.354 0H6.823Z" />
             </svg>
-            <div id="mensaje_alerta" class="ms-3 text-sm font-medium">
-                A simple danger alert with an <a href="#"
-                    class="font-semibold underline hover:no-underline">example link</a>. Give it a click if you like.
+            <span class="sr-only">Info</span>
+            <div id="mensaje_alerta">
+                <span class="font-medium">Danger alert!</span> Change a few things up and try submitting again.
             </div>
         </div>
 
@@ -535,6 +535,106 @@
                 <!-- Card (Income/Expenses) -->
                 {{-- <x-dashboard.dashboard-card-13 /> --}}
 
+
+
+                <div
+                    class="fixed z-50 w-full h-16 max-w-md -translate-x-1/2 bg-white border border-gray-200 rounded-full bottom-4 left-1/2 dark:bg-gray-700 dark:border-gray-600">
+                    <div class="grid h-full max-w-lg grid-cols-5 mx-auto">
+                        <button data-tooltip-target="tooltip-home" type="button"
+                            class="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                            <a href={{ route('dashboard') }}>
+                                <svg class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path
+                                        d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
+                                </svg>
+                                <span class="sr-only">Dashboard</span>
+                            </a>
+                        </button>
+                        <div id="tooltip-home" role="tooltip"
+                            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                            Dashboard
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+
+
+                        <button data-tooltip-target="tooltip-mapa" type="button"
+                            class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                            <a href={{ route('map') }}>
+                                <svg class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path
+                                        d="M8 0a7.992 7.992 0 0 0-6.583 12.535 1 1 0 0 0 .12.183l.12.146c.112.145.227.285.326.4l5.245 6.374a1 1 0 0 0 1.545-.003l5.092-6.205c.206-.222.4-.455.578-.7l.127-.155a.934.934 0 0 0 .122-.192A8.001 8.001 0 0 0 8 0Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
+                                </svg>
+                                <span class="sr-only">Mapa</span>
+                            </a>
+                        </button>
+                        <div id="tooltip-mapa" role="tooltip"
+                            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                            Mapa
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+
+
+                        <div class="flex items-center justify-center">
+                            <button data-modal-target="crud-modal" data-modal-toggle="crud-modal"
+                                onclick="cargarModal()" data-tooltip-target="tooltip-new" type="button"
+                                class="inline-flex items-center justify-center w-10 h-10 font-medium bg-blue-600 rounded-full hover:bg-blue-700 group focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800">
+                                <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 18 18">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M9 1v16M1 9h16" />
+                                </svg>
+                                <span class="sr-only">Crear notificación</span>
+                            </button>
+                        </div>
+                        <div id="tooltip-new" role="tooltip"
+                            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                            Crear notificación
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+
+                        <button data-tooltip-target="tooltip-settings" type="button"
+                            class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                            <svg class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M4 12.25V1m0 11.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M4 19v-2.25m6-13.5V1m0 2.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M10 19V7.75m6 4.5V1m0 11.25a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5ZM16 19v-2" />
+                            </svg>
+                            <span class="sr-only">Configuración</span>
+                        </button>
+                        <div id="tooltip-settings" role="tooltip"
+                            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                            Configuración
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+
+
+                        <button data-tooltip-target="tooltip-profile" type="button"
+                            class="inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                            <a href="{{ route('profile.show') }}">
+                                <svg class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path
+                                        d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
+                                </svg>
+                                <span class="sr-only">Perfil</span>
+                            </a>
+                        </button>
+                        <div id="tooltip-profile" role="tooltip"
+                            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                            Perfil
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
 
         </div>
@@ -712,65 +812,119 @@
             };
 
 
-
             // ALERTAS
             function generarAlerta(nuevoMensaje) {
                 mensajeAlerta = document.getElementById("mensaje_alerta");
-                mensajeAlerta.innerHTML = nuevoMensaje;
+
+                titulo = nuevoMensaje.split(" ")[0]
+                cuerpo = nuevoMensaje.substring(titulo.length, nuevoMensaje.length)
+
+                mensajeAlerta.innerHTML = '<span class="font-medium">' + titulo + '</span>' + cuerpo;
 
                 alerta = document.getElementById("alerta");
                 alerta.classList.toggle("hidden");
 
                 setTimeout(function() {
-                    ocultarElemento("alerta");
+                    //ocultarElemento("alerta");
+                    alerta.classList.toggle("hidden");
                 }, 10000);
+
+                cargarNotificacion(titulo, cuerpo)
             }
 
 
-            function ocultarElemento(idElemento) {
-                // target element that will be dismissed
-                const $targetEl = document.getElementById(idElemento);
+            function cargarNotificacion(titulo, cuerpo) {
+                if (document.querySelectorAll("#lista_notif li").length == 5) {
+                    // solo se mantienen hasta 4 notificaciones
+                    primerLi = document.querySelector("#lista_notif li")
+                    primerLi.remove()
+                }
 
-                // optional trigger element
-                const $triggerEl = document.getElementById("triggerElement");
+                ul = document.getElementById("lista_notif")
+                li = document.createElement("li")
+                li.setAttribute('class', 'border-b border-slate-200 dark:border-slate-700 last:border-0');
 
-                // options object
-                const optionsAlert = {
-                    transition: "transition-opacity",
-                    duration: 1000,
-                    timing: "ease-out",
-
-                    //callback functions
-                    onHide: (context, targetEl) => {
-                        console.log("element has been dismissed");
-                        console.log(targetEl);
-                    },
-                };
-
-                // instance options object
-                const instanceOptionsAlert = {
-                    id: "targetElement",
-                    override: true,
-                };
-
-
-                /*
-                 * $targetEl (required)
-                 * $triggerEl (optional)
-                 * options (optional)
-                 * instanceOptions (optional)
-                 */
-                const dismiss = new Dismiss(
-                    $targetEl,
-                    $triggerEl,
-                    optionsAlert,
-                    instanceOptionsAlert
+                a = document.createElement("a")
+                a.setAttribute('class',
+                    'block py-2 px-4 hover:bg-slate-50 dark:hover:bg-slate-700/20" href="#0" @click="open = false" @focus="open = true" @focusout="open = false'
                 );
 
-                // hide the target element
-                dismiss.hide();
+                spanExtTexto = document.createElement("span")
+                spanExtTexto.setAttribute('class', 'block text-sm mb-2')
+
+                spanIntTitulo = document.createElement("span")
+                spanIntTitulo.setAttribute('class', 'font-medium text-slate-800 dark:text-slate-100');
+                spanIntTitulo.innerHTML = titulo
+
+                spanFecha = document.createElement("span")
+                spanFecha.setAttribute('class', 'block text-xs font-medium text-slate-400 dark:text-slate-500');
+                fecha = new Date()
+                options = {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: "numeric",
+                    minute: "numeric",
+                    second: "numeric"
+                };
+                spanFecha.innerHTML = fecha.toLocaleString('es-ES', options)
+
+                spanExtTexto.innerHTML = '<span class="font-medium text-slate-800 dark:text-slate-100">' + titulo + '</span> ' +
+                    cuerpo;
+
+                a.appendChild(spanExtTexto)
+                a.appendChild(spanFecha)
+
+                li.appendChild(a)
+                ul.appendChild(li)
             }
 
+            /*
+                        function ocultarElemento(idElemento) {
+                            // target element that will be dismissed
+                            const $targetEl = document.getElementById(idElemento);
+
+                            // optional trigger element
+                            const $triggerEl = document.getElementById("triggerElement");
+
+                            // options object
+                            const optionsAlert = {
+                                transition: "transition-opacity",
+                                duration: 1000,
+                                timing: "ease-out",
+
+                                //callback functions
+                                onHide: (context, targetEl) => {
+                                    console.log("element has been dismissed");
+                                    console.log(targetEl);
+                                },
+                            };
+
+                            // instance options object
+                            const instanceOptionsAlert = {
+                                id: "targetElement",
+                                override: true,
+                            };
+
+            */
+            /*
+             * $targetEl (required)
+             * $triggerEl (optional)
+             * options (optional)
+             * instanceOptions (optional)
+             */
+            /*               const dismiss = new Dismiss(
+                                    $targetEl,
+                                    $triggerEl,
+                                    optionsAlert,
+                                    instanceOptionsAlert
+                                );
+
+                                // hide the target element
+                                dismiss.hide();
+                            }
+                */
             function mostrarToast(idToast) {
                 console.log("mostrar toast")
                 tstNotificacion = document.getElementById(idToast);
