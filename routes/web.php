@@ -27,7 +27,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/json-key-feed', [UserController::class, 'getKeyFeed'])->name('json_key_feed');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/map', [MapController::class, 'map'])->name('map');
-    Route::get('/crear-regla', [ReglaController::class, 'crearRegla'])->name('crear_regla');
     Route::fallback(function() {
         return view('pages/utility/404');
     });    

@@ -15,30 +15,7 @@ class MapController extends Controller
      */
     public function map()
     {
-        $userData = [
-            'api_key' => Auth::user()->api_key,
-            'x_api_secret' => Auth::user()->x_api_secret
-        ];
-
-        // Construye la URL y los datos para la solicitud POST
-        $url = 'http://localhost:3000/apiv1/estaciones';
-        $data = [
-            'api_key' => $userData['api_key'],
-            'x_api_secret' => $userData['x_api_secret']
-        ];
-
-        // Realiza la solicitud POST utilizando el cliente HTTP de Laravel
-        $response = Http::post($url, $data);
-
-        // Decodifica la respuesta JSON, si es necesario
-        $responseData = $response->json();
-        $stations = $responseData['stations'];
-
-        $markers = [];
-        foreach ($stations as $station) {
-            array_push($markers, ['lat' => $station['latitude'], 'long' => $station['longitude'], 'info' => $station['station_name']]);
-        };
-
-        return view('pages/map/map', compact(['stations', 'markers']));
+        $topics = ['Temperatura' => 'temp', 'Humedad' => 'hum','Viento'=> 'wind_speed_last' , 'Lluvia' =>'rain_storm_last_mm' ];
+        return view('pages/map/map',compact('topics'));
     }
 }

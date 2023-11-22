@@ -1,5 +1,4 @@
 <x-app-layout>
-
     <style>
         :root {
             --building-color: #FF9800;
@@ -126,6 +125,14 @@
             color: #388E3C;
         }
 
+        .property .house {
+            color: #1eb9b1;
+        }
+
+        .property .rain {
+            color: #889b9a;
+        }
+
         /*
  * House icon colors.
  */
@@ -239,23 +246,24 @@
 
                     const responseData = await responseB.json();
                     const stations = responseData.stations;
-
+                    // console.log(stations);
                     stations.forEach(function(station) {
                         properties.push({
                             address: station.city + ", " + station.country,
                             description: station.station_name,
-                            price: station.station_name,
+                            name: station.station_name,
                             type: "house-signal",
-                            temp: 5,
-                            wind: 4.5,
-                            hum: 300,
+                            temp: "-",
+                            wind: "-",
+                            hum: "-",
+                            rain: "-",
                             position: {
                                 lat: station.latitude,
                                 lng: station.longitude,
                             },
                         });
                     });
-                    console.log(properties);
+                    // console.log(properties);
                     for (const property of properties) {
                         const AdvancedMarkerElement = new google.maps.marker.AdvancedMarkerElement({
                             map,
@@ -290,27 +298,32 @@
             content.classList.add("property");
             content.innerHTML = `
     <div class="icon">
-        <i aria-hidden="true" class="fa fa-icon fa-${property.type}" title="${property.type}"></i>
+        <i aria-hidden="true" class="fa fa-icon fa-${property.type} house" title="${property.type}"></i>
         <span class="fa-sr-only">${property.type}</span>
     </div>
     <div class="details">
-        <div class="price">${property.price}</div>
+        <div class="name">${property.name}</div>
         <div class="address">${property.address}</div>
         <div class="features">
         <div>
-            <i aria-hidden="true" class="fa-solid fa-temperature-low fa-lg temp" title="bedroom"></i>
+            <i aria-hidden="true" class="fa-solid fa-temperature-low fa-lg temp" title="Temperatura"></i>
             <span class="fa-sr-only">Temperatura</span>
-            <span>${property.temp} °C</span>
+            <span class="{{ $topics['Temperatura'] }}">${property.temp}</span><span>°C</span>
         </div>
         <div>
-            <i aria-hidden="true" class="fa fa-wind fa-lg wind" title="bathroom"></i>
+            <i aria-hidden="true" class="fa fa-wind fa-lg wind" title="Viento"></i>
             <span class="fa-sr-only">Viento</span>
-            <span>${property.wind}</span>
+            <span class"{{ $topics['Viento'] }}">${property.wind}</span><span>Km/h</span>
         </div>
         <div>
-            <i aria-hidden="true" class="fa fa-cloud fa-lg hum" title="size"></i>
+            <i aria-hidden="true" class="fa fa-cloud fa-lg hum" title="Humedad"></i>
             <span class="fa-sr-only">Humedad</span>
-            <span>${property.hum} ft<sup>2</sup></span>
+            <span class="{{ $topics['Humedad'] }}">${property.hum}</span><span> %</span>
+        </div>
+        <div>
+            <i aria-hidden="true" class="fa-solid fa-cloud-showers-heavy fa-lg rain" title="Lluvia"></i>
+            <span class="fa-sr-only">Lluvia</span>
+            <span class="{{ $topics['Lluvia'] }}">${property.rain}</span><span> mm</span>
         </div>
         </div>
     </div>
