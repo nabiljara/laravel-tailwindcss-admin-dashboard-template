@@ -765,7 +765,7 @@
                 setTimeout(function() {
                     // ocultarElemento("alerta");
                     alerta.classList.toggle("hidden");
-                }, 10000);
+                }, 7000);
 
                 cargarNotificacion(titulo, cuerpo, fechaStr)
             }
@@ -861,7 +861,7 @@
 
                 setTimeout(function() {
                     tstNotificacion.classList.toggle("hidden");
-                }, 10000);
+                }, 5000);
             }
 
             // FORM NOTIFICACIONES | REGLAS

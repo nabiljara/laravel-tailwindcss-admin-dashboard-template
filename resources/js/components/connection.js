@@ -9,7 +9,7 @@ const connection = () => {
         connectTimeout: 4000,
         username: "Nabil",
         password: "1234",
-        reconnectPeriod: 10000,
+        reconnectPeriod: 5000,
         keepalive: 0,
     };
 
@@ -55,8 +55,8 @@ const connection = () => {
     ];
 
     topics.forEach((topic) => {
-        client.subscribe(topic,{ qos: 2, retain: true }, () => {
-            console.log(`Subscribed to topic '${topic}'`);
+        client.subscribe(topic,{ qos: 0, retain: true }, () => {
+            // console.log(`Subscribed to topic '${topic}'`);
         });
     });
     

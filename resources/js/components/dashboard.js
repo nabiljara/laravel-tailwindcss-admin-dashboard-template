@@ -137,22 +137,10 @@ const dashboard = () => {
     };
 
     client.on("message", (topic, payload) => {
+        const station_id = topic.split("-")[1];
+        const measure = topic.split("/").pop();
         if (!(topic == "Alertas")) {
-            const station_id = topic.split("-")[1];
-            const measure = topic.split("/").pop();
-            /*
-            switch (measure) {
-                case "temp":
-                    payload = (((parseFloat(payload) - 32) * 5) / 9).toFixed(1);
-                    break;
-                case "dew_point":
-                    payload = (((parseFloat(payload) - 32) * 5) / 9).toFixed(1);
-                    break;
-                case "wind_speed_last":
-                    payload = (parseFloat(payload) * 1.60934).toFixed(1); // Convertir millas/h a km/h
-                    break;
-            }
-*/
+
             triggerElId = CSS.escape(station_id);
 
             tabs
@@ -196,12 +184,28 @@ const dashboard = () => {
 
             generarAlerta(titulo, cuerpo, fecha);
         }
-    });
 
-    // get the tab object based on ID
-    // console.log(tabs.getTab(triggerElId).targetEl.querySelector(".measure"));
-    // tabs.getTab(triggerElId).targetEl.querySelector(".measure").textContent = "Hola"; //Forma de acceder al componente correctamente.
-    // get the current active tab object
+        // const requestData = {
+        //     station_id: station_id,
+        //     measure: measure,
+        //     payload,
+        // };
+        // const url = "http://localhost:3000/apiv1/saveData";
+        // fetch(url, {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify(requestData),
+        // })
+        //     .then((response) => response.json())
+        //     .then((data) => {
+        //         console.log(data);
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     });
+    });
 };
 
 export default dashboard;

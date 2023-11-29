@@ -393,16 +393,16 @@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPS_GOOGLE_MAPS_ACCESS_TOKEN') }}&callback=initMap"></script>
     <script async defer src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script async defer src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
-    <script async defer>
+    <script>
         const clientId = `mapa_clima`;
         const connectUrl = `ws://150.230.80.1:8083/mqtt`;
         const options = {
             clientId,
             clean: false,
             connectTimeout: 4000,
-            username: "Nabil",
+            username: "Tomas",
             password: "1234",
-            reconnectPeriod: 100000,
+            reconnectPeriod: 5000,
             keepalive: 0,
         };
         // const topic = "Estación-145839-Sensor-557448/bar-absolute";
@@ -429,22 +429,27 @@
         ];
 
         topics.forEach((topic) => {
-            client.subscribe(topic, { qos: 2, retain: true }, () => {
-                console.log(`Subscribed to topic '${topic}'`);
+            client.subscribe(topic, {
+                qos: 0,
+                retain: true
+            }, () => {
+                // console.log(`Subscribed to topic '${topic}'`);
             });
         });
 
         client.on('message', (topic, payload) => {
             if (!(topic == "Alertas")) {
-                // console.log(payload);
+
                 const station_id = topic.split("-")[1];
                 const measure = topic.split("/").pop().split("_")[0];
+                const stationId = CSS.escape(station_id);
                 // console.log(measure);
-                const element =  document.getElementById(station_id);
+                // console.log(station_id);
+                // console.log(stationId)
+                const element = document.querySelector(`#${stationId}`);
                 // console.log(element);
-                // console.log(element.getElementsByClassName(`${measure}`)[1]);
-
                 element.getElementsByClassName(`${measure}`)[1].textContent = payload;
+                // document.getElementById(stationId).getElementsByClassName(`${measure}`)[1].textContent = payload;
             }
         });
         // tabs.getTab(triggerElId).targetEl.querySelector(`.${measure}`).textContent = payload;
