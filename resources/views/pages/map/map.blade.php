@@ -390,7 +390,7 @@
         }
     </script>
     <!-- prettier-ignore -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPS_GOOGLE_MAPS_ACCESS_TOKEN') }}&callback=initMap"></script>
+    <script loading=async async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAPS_GOOGLE_MAPS_ACCESS_TOKEN') }}&callback=initMap"></script>
     <script async defer src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script async defer src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
     <script>
