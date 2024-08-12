@@ -26,7 +26,7 @@ class DashboardController extends Controller
         ];
 
         // Construye la URL y los datos para la solicitud POST
-        $url = 'http://localhost:3000/apiv1/estaciones';
+        $url = env('API_URL');
         $data = [
             'api_key' => $userData['api_key'],
             'x_api_secret' => $userData['x_api_secret']
